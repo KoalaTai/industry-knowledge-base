@@ -1,0 +1,23 @@
+
+sequenceDiagram
+    participant A as App
+    participant S as Server
+    participant AU as Authentication
+    participant E as Encryption
+    participant STT as SpeechToText
+    participant GPT as GPTIntegration
+    participant UI as UserInterface
+    participant FS as FeedbackSystem
+    A->>S: startServer()
+    S->>AU: login(credentials)
+    AU-->>S: return token
+    S->>E: encrypt(data)
+    E-->>S: return encryptedData
+    S->>STT: transcribe(audioStream)
+    STT-->>S: return transcription
+    S->>GPT: generateContent(context)
+    GPT-->>S: return generatedContent
+    S->>UI: renderUI()
+    UI-->>S: return UI
+    S->>FS: analyzeResponse(response)
+    FS-->>S: return feedback

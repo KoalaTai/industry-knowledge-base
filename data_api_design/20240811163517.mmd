@@ -1,0 +1,37 @@
+
+classDiagram
+    class App {
+        -Express app
+        +startServer() void
+    }
+    class Server {
+        -HTTP server
+        +handleRequests() void
+    }
+    class Authentication {
+        +login(credentials: Object) String
+        +register(userDetails: Object) String
+    }
+    class Encryption {
+        +encrypt(data: String) String
+        +decrypt(data: String) String
+    }
+    class SpeechToText {
+        +transcribe(audioStream: Stream) String
+    }
+    class GPTIntegration {
+        +generateContent(context: Object) String
+    }
+    class UserInterface {
+        +renderUI() void
+    }
+    class FeedbackSystem {
+        +analyzeResponse(response: String) String
+    }
+    App --> Server
+    Server --> Authentication
+    Server --> Encryption
+    Server --> SpeechToText
+    Server --> GPTIntegration
+    Server --> UserInterface
+    Server --> FeedbackSystem
