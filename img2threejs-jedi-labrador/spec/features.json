@@ -1,0 +1,10 @@
+[
+ {"id":"pose-silhouette","score":0.72,"notes":"Standing quadruped, head high left, four planted legs, raised tail. Body fractionally shorter than reference."},
+ {"id":"anatomy-proportion","score":0.70,"notes":"~4.5 head-unit body, shoulder height matches; legs slightly thinner than reference."},
+ {"id":"face-landmark-placement","score":0.70,"notes":"Broad flat skull, boxy deep muzzle with stop, black nose, dark eye, floppy ear along cheek — all present; overall shape stylized (cartoon), not photoreal."},
+ {"id":"saber-grip","score":0.75,"notes":"Hilt passes through jaw grip, silver band at lips, pommel behind mouth, blade angled ~30deg down toward lower-front — matches reference."},
+ {"id":"blade-glow","score":0.80,"notes":"White-hot core, red-orange additive halo, red spill on chest and floor pool."},
+ {"id":"outfit-and-palette","score":0.68,"notes":"Black robe covers back with sleeves, hanging belly panel, pleated skirt over hindquarters; reads slicker/smoother than the reference's crumpled cotton."},
+ {"id":"tail-ears","score":0.72,"notes":"Tail raised ~35deg with pale tip; ears hang beside skull."},
+ {"id":"floor-context","score":0.75,"notes":"Charcoal floor, soft contact shadows under paws, red glow pool."}
+]

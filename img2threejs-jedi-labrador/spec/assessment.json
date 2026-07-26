@@ -1,0 +1,430 @@
+{
+  "targetName": "Jedi Labrador with Lightsaber",
+  "sourceImage": "../work/jedi-dog.png",
+  "preSpecAssessment": {
+    "objectClass": {
+      "primaryType": "costumed-quadruped-character-with-prop",
+      "primaryDomain": "hybrid",
+      "formLanguage": [
+        "organic-rounded",
+        "draped-soft-fabric",
+        "cylindrical-hard-prop"
+      ],
+      "structureKind": [
+        "quadruped-skeleton",
+        "draped-garment-over-torso",
+        "rigid-prop-held-in-mouth"
+      ],
+      "motionPotential": [
+        "walk-cycle",
+        "head-turn",
+        "tail-wag",
+        "jaw-grip",
+        "saber-swing"
+      ],
+      "materialFamilies": [
+        "short-fur",
+        "matte-cotton-fabric",
+        "matte-black-polymer",
+        "emissive-polycarbonate-blade"
+      ],
+      "notes": "Yellow/cream Labrador Retriever standing in 3/4 view facing camera-left, wearing a black Jedi/Sith robe (sleeves on forelegs, skirt draped over hindquarters), gripping a toy lightsaber horizontally in its mouth: black cylindrical hilt with silver-taped grip band, red-orange emissive blade with white-hot core angled downward to the right. Convention-floor setting: dark charcoal marble-like floor with red glow spill from the blade onto chest fur and floor."
+    },
+    "complexity": {
+      "tier": "complex",
+      "scores": {
+        "silhouetteComplexity": 4,
+        "componentCount": 4,
+        "hierarchyDepth": 3,
+        "repetitionDensity": 2,
+        "materialLayerCount": 3,
+        "localDetailDensity": 3,
+        "occlusionRisk": 4,
+        "actionReadinessNeed": 3
+      },
+      "estimatedCounts": {
+        "macroComponents": 5,
+        "mesoComponents": 14,
+        "microFeatureGroups": 8,
+        "materialLayers": 5,
+        "repetitionSystems": 2
+      },
+      "reasoning": [
+        "Quadruped organic form: torso, head+muzzle, 4 legs, tail = 7 macro masses before costume.",
+        "Robe adds draped-fabric meso forms: collar/shoulder cape, two forelimb sleeves, skirt panels with fold ridges.",
+        "Lightsaber prop: hilt (pommel, grip, silver band, emitter) + emissive blade (core + halo shells).",
+        "Occlusion: robe hides most of torso; right body side hidden by pose; underside unseen \u2014 inferred symmetric.",
+        "Identity features: cream fur color, floppy ears, black nose, dark eyes, black robe, red blade grip in mouth."
+      ]
+    },
+    "specDepthDecision": {
+      "requiredDepth": "complex",
+      "minimumComponentLevels": [
+        "macro",
+        "meso",
+        "micro"
+      ],
+      "needsRepetitionSystems": true,
+      "needsMaterialLocalOverrides": true,
+      "needsMultipleReviewViews": true,
+      "needsActionReadyHierarchy": true,
+      "rationale": "Choose simple/moderate/complex/ultra-complex from observed structure, not from a hardcoded domain."
+    },
+    "unknownsToResolveBeforeImplementation": [],
+    "detailInventory": {
+      "scanMethod": "grid-3x3",
+      "targetMinDetails": 10,
+      "note": "Enumerate every identity-defining small detail before authoring the spec. Each detail must map to a component.localFeatures entry or material.localOverrides entry, never prose only. Use forge/stage1_intake/build_detail_inventory.py to scan zones.",
+      "details": [
+        {
+          "id": "fur-cream-albedo",
+          "zone": "r0c0",
+          "desc": "Cream/pale-yellow short fur, warm hue on head, lighter on legs",
+          "maps": "material:fur"
+        },
+        {
+          "id": "ear-floppy",
+          "zone": "r0c0",
+          "desc": "Floppy triangular ears falling beside skull, darker warm shadowing",
+          "maps": "component:earL/earR"
+        },
+        {
+          "id": "nose-black",
+          "zone": "r0c0",
+          "desc": "Black nose leather, low roughness highlight",
+          "maps": "component:nose"
+        },
+        {
+          "id": "eyes-dark",
+          "zone": "r0c0",
+          "desc": "Dark brown almond eyes with catchlight",
+          "maps": "component:eyeL/eyeR"
+        },
+        {
+          "id": "jaw-grip",
+          "zone": "r1c0",
+          "desc": "Mouth open ~12deg gripping hilt; teeth hint, pink tongue edge",
+          "maps": "component:jaw"
+        },
+        {
+          "id": "hilt-black",
+          "zone": "r1c0",
+          "desc": "Matte black cylindrical hilt, ribbed pommel toward camera",
+          "maps": "component:saberHilt"
+        },
+        {
+          "id": "hilt-silver-band",
+          "zone": "r1c0",
+          "desc": "Silver duct-tape grip band mid-hilt",
+          "maps": "component:hiltBand"
+        },
+        {
+          "id": "blade-core",
+          "zone": "r1c1",
+          "desc": "White-hot blade core with yellow-to-red radial falloff, rounded tip",
+          "maps": "component:bladeCore"
+        },
+        {
+          "id": "blade-halo",
+          "zone": "r1c1",
+          "desc": "Red-orange volumetric glow halo around blade",
+          "maps": "component:bladeGlow"
+        },
+        {
+          "id": "robe-drape",
+          "zone": "r0c1",
+          "desc": "Black robe draped over back/torso, wrinkle folds, dog-hair lint",
+          "maps": "component:robeBody, material:cloth"
+        },
+        {
+          "id": "robe-sleeves",
+          "zone": "r1c1",
+          "desc": "Wide sleeves on forelegs ending mid-leg",
+          "maps": "component:sleeveL/sleeveR"
+        },
+        {
+          "id": "robe-skirt-folds",
+          "zone": "r1c2",
+          "desc": "Skirt panels with vertical fold ridges over hindquarters",
+          "maps": "component:robeSkirt repetition:foldRidges"
+        },
+        {
+          "id": "tail-raised",
+          "zone": "r0c2",
+          "desc": "Cream tail raised ~35deg, tapering",
+          "maps": "component:tail"
+        },
+        {
+          "id": "paws-white",
+          "zone": "r2c1",
+          "desc": "White paws with toe splits visible",
+          "maps": "component:paws repetition:toes"
+        },
+        {
+          "id": "red-spill",
+          "zone": "r1c0",
+          "desc": "Red glow spill from blade onto chest fur and floor",
+          "maps": "lighting:redPointLight"
+        },
+        {
+          "id": "floor-charcoal",
+          "zone": "r2c0",
+          "desc": "Dark charcoal floor, faint marble veining, soft reflections",
+          "maps": "component:floor material:floor"
+        }
+      ]
+    },
+    "anatomy": {
+      "applies": true,
+      "styleHeads": 4.5,
+      "proportions": {
+        "headUnit": 1.0,
+        "torso": 2.2,
+        "legs": 1.6,
+        "shoulderWidth": 1.1,
+        "hipWidth": 1.0
+      },
+      "pose": {
+        "type": "standing-quadruped-3q-left",
+        "jointAngles": {
+          "neck": 20,
+          "headYawTowardCamera": 30,
+          "tailRaise": 35,
+          "frontLegs": 0,
+          "rearLegs": 5,
+          "jawOpen": 12,
+          "saberPitchDeg": -25
+        }
+      },
+      "faceLandmarks": {
+        "eyeLine": 0.42,
+        "eyeSpacing": 0.38,
+        "noseBase": 0.78,
+        "mouthLine": 0.88,
+        "hairline": 0.1
+      },
+      "features": [
+        "floppy triangular ears",
+        "broad Labrador skull with defined stop",
+        "boxy muzzle",
+        "black nose leather",
+        "dark round eyes",
+        "mouth gripping saber hilt"
+      ],
+      "confidence": 0.75,
+      "note": "Quadruped adaptation: headUnit = skull length; body ~4.5 head-units long. Landmarks normalized over head height. Pose from single view; right side inferred symmetric."
+    },
+    "sourceImage": "../work/jedi-dog.png"
+  },
+  "qualityContract": {
+    "qualityBar": "complex",
+    "definitionOfDone": [
+      "The rendered model matches the reference silhouette, primary proportions, visible component hierarchy, material response, and most recognizable local features for the selected fidelity tier."
+    ],
+    "minimumSpecDepth": {
+      "macroComponents": 3,
+      "mesoComponents": 8,
+      "microFeatureGroups": 5,
+      "materialLayers": 3,
+      "repetitionSystems": 1,
+      "reviewViewpoints": 4
+    },
+    "featureGroups": [
+      {
+        "id": "overall-silhouette",
+        "name": "Overall silhouette and proportions",
+        "required": true,
+        "qualityCriteria": [
+          "Bounding shape, dominant curves, negative spaces, and scale relationships are explicitly described."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "model reads as a generic placeholder instead of the reference object",
+          "major proportions are guessed without evidence"
+        ]
+      },
+      {
+        "id": "primary-structure",
+        "name": "Primary structure and hierarchy",
+        "required": true,
+        "qualityCriteria": [
+          "Major parts, joints, seams, contact points, and parent-child relationships are named before code generation."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "large visible parts are merged into one mesh",
+          "component hierarchy is too shallow for the observed complexity"
+        ]
+      },
+      {
+        "id": "attachment-joint-correctness",
+        "name": "Attachment and joint correctness",
+        "required": true,
+        "qualityCriteria": [
+          "Every visible child appendage, branch, limb, handle, connector, tube, cable, horn, wing, leg, or hinged part has an attachment contract with parent socket, localStart/localEnd, contact type, embed/overlap, and gap tolerance."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "child part root floats away from the parent",
+          "branch/limb/tube is centered in space instead of pivoting from its root",
+          "parent-child transform mixes world and local coordinates"
+        ]
+      },
+      {
+        "id": "surface-material-response",
+        "name": "Surface material response",
+        "required": true,
+        "qualityCriteria": [
+          "Albedo zones, roughness, normal/bump/displacement intent, cavity dirt, edge wear, and local overrides are specified where visible.",
+          "Important materials define independent albedo, roughness, height/normal, and AO responses instead of reusing one texture for unrelated PBR channels.",
+          "Surface response is decomposed into macro, meso, and micro frequency bands with scale and amplitude tied to object scale."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "surface looks like flat plastic",
+          "local material variation is missing or not tied to image evidence"
+        ]
+      },
+      {
+        "id": "reference-lookdev",
+        "name": "Reference color, material, and lighting response",
+        "required": true,
+        "qualityCriteria": [
+          "Material-pass names the reference-derived albedo palette, roughness variation, tactile normal/bump/displacement response, and local masks.",
+          "When a source image is available, run reference PBR extraction and require confidence >= 0.7 before treating maps as implementation-ready.",
+          "Lighting-pass names key/fill/rim or environment light, exposure, tone mapping, background, and contact shadow behavior.",
+          "Neutral, grazing-angle, and reference-matched renders prove that surface relief survives relighting and is not painted into albedo."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "model has acceptable shape but reads as flat shaded or plastic",
+          "colors are a generic average instead of reference-observed local color zones",
+          "lighting is evenly ambient and cannot reproduce the source value range"
+        ]
+      }
+    ],
+    "visualDeltaChecks": [
+      "silhouette and negative-space delta",
+      "component hierarchy depth delta",
+      "repetition density and distribution delta",
+      "material albedo/roughness/normal response delta",
+      "local feature placement and scale delta"
+    ],
+    "antiShallowSpecRules": [
+      "Do not proceed to code if qualityContract.qualityBar is unassessed.",
+      "Do not proceed to code if the spec only contains a root component for a moderate or complex object.",
+      "Do not proceed to code if required featureGroups are not represented by componentTree, materials, or repetitionSystems.",
+      "Do not proceed to code if visible local features are described only in prose and not attached to components/materials/evidenceRefs.",
+      "Do not proceed past structural-pass if attached child parts lack attachment.parentSocket, localStart, localEnd, embedDepth/overlap, and gapTolerance.",
+      "Do not pass material look-dev when albedo is reused as roughness, height, normal, or AO.",
+      "Do not pass material look-dev without macro, meso, and micro surface frequency bands for close-up materials.",
+      "Do not pass reference-fidelity material look-dev from a source image without usable referencePbr maps or an explicit documented limitation.",
+      "Do not patch a spec with extracted PBR maps when extraction confidence is below the target threshold unless the user explicitly accepts lower fidelity.",
+      "Do not place adjacent separate-geometry parts below 0.02 world-unit seam overlap (source: grimoire/build/geometry_patterns.md).",
+      "Do not satisfy raised or recessed relief, fasteners, or grip structure with a map alone when the feature affects form; use geometry or displacement (source: grimoire/build/geometry_patterns.md)."
+    ]
+  },
+  "authoringInstruction": "Fill observed object class, complexity reasoning, featureGroups, visualDeltaChecks, and unknowns before generating or implementing ObjectSculptSpec.",
+  "localSpecSearch": {
+    "collection": "core_3d",
+    "query": "Jedi Labrador with Lightsaber quadruped dog anatomy proportions fabric cloth robe drape folds emissive glow blade fur short coat material roughness",
+    "index": {
+      "status": "rebuilt",
+      "reason": "missing",
+      "fingerprint": "6857e5ab528b42ac12f4f411f862610a0bffce8e47aee3610a7603c318072fe8"
+    },
+    "matches": [
+      {
+        "record_id": "core.pbr-color-space-srgb-vs-linearnocolorspace",
+        "file_path": "docs/raw/img2threejs-skill-dataset.json",
+        "heading": null,
+        "key_path": "categories.material_pbr[11]",
+        "score": 7.286490505441,
+        "snippets": [
+          "... v\u00e0 c\u00e1c b\u1ea3n \u0111\u1ed3 d\u1eef li\u1ec7u to\u00e1n h\u1ecdc (ph\u1ea3i gi\u1eef tuy\u1ebfn t\u00ednh/kh\u00f4ng hi\u1ec7u ch\u1ec9nh). Recognition cues: Base color/albedo and emissive textures are the only ones that should look like natural photographic color; Normal, roughness, metalness, and ..."
+        ],
+        "source_refs": [
+          {
+            "path": "docs/raw/img2threejs-skill-dataset.json",
+            "heading": null,
+            "key_path": "categories.material_pbr[11]"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "docs/raw/img2threejs-skill-dataset.json",
+            "note": "img2threejs NotebookLM research distillation"
+          }
+        ]
+      },
+      {
+        "record_id": "core.measurement-source-text",
+        "file_path": "grimoire/intake/image_analysis.md",
+        "heading": "Layer 2 \u2014 Overall form & silhouette",
+        "key_path": null,
+        "score": 5.268490296339,
+        "snippets": [
+          "Record proportions relative to a named reference dimension and keep observations separate from inference."
+        ],
+        "source_refs": [
+          {
+            "path": "grimoire/intake/image_analysis.md",
+            "heading": "Layer 2 \u2014 Overall form & silhouette",
+            "key_path": null
+          },
+          {
+            "path": "grimoire/intake/image_analysis.md",
+            "heading": "The Rule",
+            "key_path": null
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "grimoire/intake/image_analysis.md"
+          },
+          {
+            "kind": "notebooklm-research",
+            "ref": "notebooklm:4b03c2f9-8393-411f-b5b4-039ab9532843",
+            "note": "Validated generic schema vocabulary; numeric claims remain backed by local source_refs."
+          }
+        ]
+      },
+      {
+        "record_id": "core.shader-mapping-extrudegeometry-custom-bladesilhouette-profiles",
+        "file_path": "docs/raw/img2threejs-skill-dataset.json",
+        "heading": null,
+        "key_path": "categories.rendering_shader_mapping[7]",
+        "score": 4.53149775143,
+        "snippets": [
+          "Maps to any part defined by a unique 2D silhouette pushed into 3D depth with a bevel. \u00c1nh x\u1ea1 t\u1edbi b\u1ea5t k\u1ef3 b\u1ed9 ph\u1eadn n\u00e0o \u0111\u01b0\u1ee3c \u0111\u1ecbnh ngh\u0129a b\u1eb1ng \u0111\u01b0\u1eddng vi\u1ec1n 2D \u0111\u1ed9c nh\u1ea5t, \u0111\u1ea9y v\u00e0o chi\u1ec1u s\u00e2u 3D v\u1edbi c\u1ea1nh v\u00e1t. Recognition cues: Blade shape that doesn't match ..."
+        ],
+        "source_refs": [
+          {
+            "path": "docs/raw/img2threejs-skill-dataset.json",
+            "heading": null,
+            "key_path": "categories.rendering_shader_mapping[7]"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "docs/raw/img2threejs-skill-dataset.json",
+            "note": "img2threejs NotebookLM research distillation"
+          }
+        ]
+      }
+    ]
+  }
+}
