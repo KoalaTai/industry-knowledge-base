@@ -121,7 +121,7 @@ def probe_block(x: int, y: int, z: int, block: str = "minecraft:air") -> str:
     return verdict + f" ({out.strip() or 'no output'})"
 
 
-LOAD_RADIUS = 128        # 256x256 blocks = 256 chunks, the forceload per-command maximum
+LOAD_RADIUS = 120        # 240x240 blocks: at most 16x16 chunks whatever the alignment (256 would straddle 17)
 
 
 def _forceload(verb: str, x: int, z: int, radius: int = LOAD_RADIUS) -> str:

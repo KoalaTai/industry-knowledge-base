@@ -242,6 +242,24 @@ class PackagingTests(unittest.TestCase):
             self.assertIn("kill @e[tag=ac_cam]", stop)
             self.assertIn("execute as @a[gamemode=spectator] run spectate", stop)
 
+    def test_forceloads_never_exceed_16_chunks_per_axis(self):
+        # forceload refuses more than 256 chunks, silently inside a function; a 256-block
+        # span that is not chunk-aligned touches 17 chunks, so every span must be <= 240
+        with zipfile.ZipFile(self.ZIP) as zf:
+            checked = 0
+            for n in zf.namelist():
+                if "/function/_s/" in n and n.endswith(".mcfunction"):
+                    for c in zf.read(n).decode().splitlines():
+                        if c.startswith("forceload add"):
+                            x1, z1, x2, z2 = (_rel(g) for g in re.findall(r"~(-?\d*)", c))
+                            self.assertLessEqual(x2 - x1 + 1, 240, c)
+                            self.assertLessEqual(z2 - z1 + 1, 240, c)
+                            checked += 1
+            self.assertGreater(checked, 100)
+            t0 = zf.read("data/ac/function/_t/0.mcfunction").decode()
+            self.assertIn("scoreboard players remove #lx1 ac_step 120", t0)
+            self.assertIn("scoreboard players add #lx2 ac_step 119", t0)
+
     def test_zip_ships_travel_functions(self):
         with zipfile.ZipFile(self.ZIP) as zf:
             names = zf.namelist()

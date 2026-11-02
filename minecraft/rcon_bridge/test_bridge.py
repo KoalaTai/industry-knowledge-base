@@ -62,7 +62,7 @@ class BridgeTests(unittest.TestCase):
             server.place_build("ac:egypt/giza", 10, -60, 20)
         adds = [c for c in self.fake.sent if c.startswith("forceload add")]
         removes = [c for c in self.fake.sent if c.startswith("forceload remove")]
-        self.assertEqual(adds, ["forceload add -118 -108 137 147"])          # 256 x 256 blocks around 10, 20
+        self.assertEqual(adds, ["forceload add -110 -100 129 139"])          # 240 x 240 blocks around 10, 20
         self.assertEqual(len(removes), 1)
         run = "execute positioned 10 -60 20 run function ac:raw/egypt/giza"
         self.assertIn(run, self.fake.sent)

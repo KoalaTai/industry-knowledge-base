@@ -46,6 +46,7 @@ NS = "ac"
 GAP = 24                 # blocks between builds in a row
 ROW_GAP = 40             # blocks between rows
 WAIT_TICKS = 60          # ticks to wait after force-loading before placing
+FORCELOAD_SPAN = 240     # blocks per forceload command side: <= 16 chunks at any alignment
 
 
 def say(text: str, color: str = "gold", bold: bool = False) -> str:
@@ -56,12 +57,17 @@ def say(text: str, color: str = "gold", bold: bool = False) -> str:
 
 
 def forceload_cmds(x1: int, z1: int, x2: int, z2: int, dx: int, dz: int, add: bool = True) -> List[str]:
-    """forceload accepts at most 256 chunks per call: tile the area in 256x256 blocks."""
+    """forceload accepts at most 256 chunks per call: tile the area in 240x240 blocks.
+
+    240 and not 256: a 256-block span that does not start on a chunk boundary
+    touches 17 chunks, and the command then fails silently inside a function.
+    A 240-block span touches at most 16 whatever its alignment.
+    """
     out = []
     verb = "add" if add else "remove"
     x1, z1, x2, z2 = x1 + dx, z1 + dz, x2 + dx, z2 + dz
-    xs = list(range(x1, x2 + 1, 256)) + [x2 + 1]
-    zs = list(range(z1, z2 + 1, 256)) + [z2 + 1]
+    xs = list(range(x1, x2 + 1, FORCELOAD_SPAN)) + [x2 + 1]
+    zs = list(range(z1, z2 + 1, FORCELOAD_SPAN)) + [z2 + 1]
     for i in range(len(xs) - 1):
         for j in range(len(zs) - 1):
             out.append(f"forceload {verb} ~{xs[i]} ~{zs[j]} ~{xs[i + 1] - 1} ~{zs[j + 1] - 1}")
@@ -223,7 +229,8 @@ def add_tour(pack: Datapack, hub_layout: List[Tuple[Item, int, int]], index_line
     pack.add("_tour_start", [f"$data modify storage {NS}:tour {k} set value $({k})" for k in "xyz"] + [
         f"data modify storage {NS}:tour i set value 0",
         f"kill @e[tag={NS}_cam]",
-        f"$summon armor_stand $(x) $(y) $(z) {{Tags:[\"{NS}_cam\"],Invisible:1b,NoGravity:1b,Invulnerable:1b,Marker:1b}}",
+        # summon beside a player (that chunk is loaded); the first frame moves it onto the orbit
+        f"execute as @a[limit=1] at @s run summon armor_stand ~ ~ ~ {{Tags:[\"{NS}_cam\"],Invisible:1b,NoGravity:1b,Invulnerable:1b}}",
         "gamemode spectator @a",
         "weather clear",
         say(f"AC Worlds tour: {len(stops)} landmarks, {TOUR_TICKS // 20} seconds each. "
@@ -233,8 +240,12 @@ def add_tour(pack: Datapack, hub_layout: List[Tuple[Item, int, int]], index_line
     pack.add("_tour_next", [f"function {NS}:_tour_go with storage {NS}:tour"])
     pack.add("_tour_go", [f"$function {NS}:_t/$(i) with storage {NS}:tour"])
     pack.add("tour_next", [f"function {NS}:_tour_next"])
+    # each stop force-loads a 240 x 240 square around its orbit so the camera entity ticks
+    pack.add("_tour_load", [f"$forceload add $(lx1) $(lz1) $(lx2) $(lz2)"])
+    pack.add("_tour_unload", [f"$forceload remove $(lx1) $(lz1) $(lx2) $(lz2)", f"data remove storage {NS}:tour lx1"])
     pack.add("tour_stop", [
         f"scoreboard players set #tour {NS}_flag 0",
+        f"execute if data storage {NS}:tour lx1 run function {NS}:_tour_unload with storage {NS}:tour",
         "execute as @a[gamemode=spectator] run spectate",
         f"kill @e[tag={NS}_cam]",
         "title @a clear",
@@ -297,6 +308,13 @@ def add_tour(pack: Datapack, hub_layout: List[Tuple[Item, int, int]], index_line
             f"$scoreboard players set #fy {NS}_step $(y)", _score_add("#fy", fy),
             f"scoreboard players set #r {NS}_step {r}",
             *[f"execute store result storage {NS}:tour {k} int 1 run scoreboard players get #{k} {NS}_step" for k in ("cx", "cz", "py", "fy")],
+            f"execute if data storage {NS}:tour lx1 run function {NS}:_tour_unload with storage {NS}:tour",
+            f"scoreboard players operation #lx1 {NS}_step = #cx {NS}_step", _score_add("#lx1", -FORCELOAD_SPAN // 2),
+            f"scoreboard players operation #lz1 {NS}_step = #cz {NS}_step", _score_add("#lz1", -FORCELOAD_SPAN // 2),
+            f"scoreboard players operation #lx2 {NS}_step = #cx {NS}_step", _score_add("#lx2", FORCELOAD_SPAN // 2 - 1),
+            f"scoreboard players operation #lz2 {NS}_step = #cz {NS}_step", _score_add("#lz2", FORCELOAD_SPAN // 2 - 1),
+            *[f"execute store result storage {NS}:tour {k} int 1 run scoreboard players get #{k} {NS}_step" for k in ("lx1", "lz1", "lx2", "lz2")],
+            f"function {NS}:_tour_load with storage {NS}:tour",
             f"scoreboard players set #frame {NS}_step 0",
             f"data modify storage {NS}:tour i set value {i + 1}",
             f"scoreboard players set #tour {NS}_flag 1",
