@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import sys
 import textwrap
@@ -184,15 +185,34 @@ def layout_hub(pack: Datapack, rows: List[Tuple[str, str, List[Item]]], hub: str
     return placed
 
 
-def add_tour(pack: Datapack, hub_layout: List[Tuple[Item, int, int]], index_lines: List[str]) -> None:
-    """ac:tour: fly the player from landmark to landmark with a chat card each.
+TOUR_TICKS = 300        # ticks per stop (15 s)
+ORBIT_STEPS = 72        # 5-degree steps; the camera advances one step every 2 ticks (7.2 s per orbit)
 
-    Stops run every 12 seconds through ``schedule``; ac:tour_next skips ahead,
-    ac:tour_stop ends it.  Positions come from storage ac:hub (adopted from
-    the running hub like ac:goto) copied into storage ac:tour with the stop
-    index.  Scheduled functions have no executor, so the tour addresses @a.
+
+def _score_add(name: str, n: int) -> str:
+    verb = "add" if n >= 0 else "remove"
+    return f"scoreboard players {verb} {name} {NS}_step {abs(n)}"
+
+
+def add_tour(pack: Datapack, hub_layout: List[Tuple[Item, int, int]], index_lines: List[str]) -> None:
+    """ac:tour: a cinematic orbit of every landmark.
+
+    ac:_tour_start summons an invisible armor stand tagged ac_cam and puts
+    every spectator on it with /spectate, so the camera moves with the
+    client's smooth entity interpolation instead of jumping.  Every tick
+    (ac:tick -> ac:_tour_frame while #tour ac_flag is 1) the frame counter
+    advances; every second frame the camera steps 5 degrees around the
+    landmark on a circle of radius r at height h, always ``facing`` the
+    landmark's centre.  The trigonometry is a 72-entry table of baked
+    cos/sin values (x1000) in ac:_dir/<k>, driven by scoreboard arithmetic,
+    so no macros do maths.  Each stop (ac:_t/<i>, a macro taking the hub
+    origin from storage) sets the orbit, shows a title card, plays a chime,
+    sets dusk for the festival stages, prints the chat card, and after
+    TOUR_TICKS the frame function calls the next stop.  ac:tour_next skips,
+    ac:tour_stop (and ac:cancel) ends and releases the camera.
     """
     stops = [(it, dx, dz) for it, dx, dz in hub_layout if not it.is_terrain]
+    cam = f"@e[tag={NS}_cam,limit=1]"
     adopt = [f"execute unless data storage {NS}:hub z if data storage {NS}:seq {{seq:\"hub\"}} "
              f"run data modify storage {NS}:hub {k} set from storage {NS}:seq {k}" for k in "xyz"]
     pack.add("tour", adopt + [
@@ -202,19 +222,66 @@ def add_tour(pack: Datapack, hub_layout: List[Tuple[Item, int, int]], index_line
     ])
     pack.add("_tour_start", [f"$data modify storage {NS}:tour {k} set value $({k})" for k in "xyz"] + [
         f"data modify storage {NS}:tour i set value 0",
+        f"kill @e[tag={NS}_cam]",
+        f"$summon armor_stand $(x) $(y) $(z) {{Tags:[\"{NS}_cam\"],Invisible:1b,NoGravity:1b,Invulnerable:1b,Marker:1b}}",
         "gamemode spectator @a",
-        say(f"AC Worlds tour: {len(stops)} stops, 12 seconds each. /function ac:tour_next skips, ac:tour_stop ends.", "gold", True),
+        "weather clear",
+        say(f"AC Worlds tour: {len(stops)} landmarks, {TOUR_TICKS // 20} seconds each. "
+            "/function ac:tour_next skips ahead, ac:tour_stop ends it. Sit back.", "gold", True),
         f"function {NS}:_tour_next",
     ])
     pack.add("_tour_next", [f"function {NS}:_tour_go with storage {NS}:tour"])
     pack.add("_tour_go", [f"$function {NS}:_t/$(i) with storage {NS}:tour"])
-    pack.add("tour_next", [f"schedule clear {NS}:_tour_next", f"function {NS}:_tour_next"])
-    pack.add("tour_stop", [f"schedule clear {NS}:_tour_next", say("Tour ended. /function ac:fly to walk, ac:goto/<world> to revisit a row.", "gold")])
+    pack.add("tour_next", [f"function {NS}:_tour_next"])
+    pack.add("tour_stop", [
+        f"scoreboard players set #tour {NS}_flag 0",
+        "execute as @a[gamemode=spectator] run spectate",
+        f"kill @e[tag={NS}_cam]",
+        "title @a clear",
+        "time set 6000",
+        say("Tour ended. /function ac:fly to walk, ac:goto/<world> to revisit a row.", "gold"),
+    ])
+    # the direction table and the per-tick camera step
+    for k in range(ORBIT_STEPS):
+        a = 2 * math.pi * k / ORBIT_STEPS
+        pack.add(f"_dir/{k}", [f"scoreboard players set #cos {NS}_step {round(1000 * math.cos(a))}",
+                               f"scoreboard players set #sin {NS}_step {round(1000 * math.sin(a))}"])
+    pack.add("_tour_dir", [f"$function {NS}:_dir/$(k)"])
+    pack.add("_tour_move", [f"$execute as {cam} run tp @s $(px) $(py) $(pz) facing $(cx) $(fy) $(cz)"])
+    pack.add("_tour_frame", [
+        f"scoreboard players add #frame {NS}_step 1",
+        f"execute if score #frame {NS}_step matches {TOUR_TICKS}.. run function {NS}:_tour_next",
+        f"scoreboard players operation #k {NS}_step = #frame {NS}_step",
+        f"scoreboard players operation #k {NS}_step /= #c2 {NS}_step",
+        f"scoreboard players operation #k {NS}_step %= #c{ORBIT_STEPS} {NS}_step",
+        f"execute store result storage {NS}:tour k int 1 run scoreboard players get #k {NS}_step",
+        f"function {NS}:_tour_dir with storage {NS}:tour",
+        f"scoreboard players operation #dx {NS}_step = #r {NS}_step",
+        f"scoreboard players operation #dx {NS}_step *= #cos {NS}_step",
+        f"scoreboard players operation #dx {NS}_step /= #c1000 {NS}_step",
+        f"scoreboard players operation #dz {NS}_step = #r {NS}_step",
+        f"scoreboard players operation #dz {NS}_step *= #sin {NS}_step",
+        f"scoreboard players operation #dz {NS}_step /= #c1000 {NS}_step",
+        f"scoreboard players operation #px {NS}_step = #cx {NS}_step",
+        f"scoreboard players operation #px {NS}_step += #dx {NS}_step",
+        f"scoreboard players operation #pz {NS}_step = #cz {NS}_step",
+        f"scoreboard players operation #pz {NS}_step += #dz {NS}_step",
+        f"execute store result storage {NS}:tour px int 1 run scoreboard players get #px {NS}_step",
+        f"execute store result storage {NS}:tour pz int 1 run scoreboard players get #pz {NS}_step",
+        f"function {NS}:_tour_move with storage {NS}:tour",
+    ])
     for i, (it, dx, dz) in enumerate(stops):
         x1, y1, z1, x2, y2, z2 = it.bounds
-        vx, vz = dx + (x1 + x2) // 2, dz + z2 + 22          # south of the build, looking north
-        vy = min(y2, 70) + 14
+        w, d, hgt = x2 - x1 + 1, z2 - z1 + 1, y2 - y1 + 1
+        cx, cz = dx + (x1 + x2) // 2, dz + (z1 + z2) // 2
+        r = max(w, d) // 2 + 24                     # orbit radius: just outside the footprint
+        h = int(hgt * 0.6) + 18                     # camera height above the ground
+        fy = hgt // 3                               # where the camera looks (a third of the way up)
         m = it.meta
+        festival = it.raw_fn.startswith("raw/insomniac/")
+        name = json.dumps({"text": it.name, "color": "gold", "bold": True}, ensure_ascii=False)
+        sub = json.dumps({"text": " - ".join(s for s in (m.get("world", ""), m.get("era", "")) if s), "color": "yellow"},
+                         ensure_ascii=False)
         card = [say(it.name, "gold", True)]
         if m.get("world") or m.get("era"):
             card.append(say(" - ".join(s for s in (m.get("world", ""), m.get("era", "")) if s), "yellow"))
@@ -222,13 +289,27 @@ def add_tour(pack: Datapack, hub_layout: List[Tuple[Item, int, int]], index_line
             card += [say(piece, "white") for piece in textwrap.wrap(m["desc"], 90)]
         if m.get("scale"):
             card.append(say(f"Scale: {m['scale']}", "gray"))
-        last = i == len(stops) - 1
-        card.append(say(f"Stop {i + 1} of {len(stops)}." + ("" if last else "  Next in 12 s; ac:tour_next to skip, ac:tour_stop to end."), "dark_gray"))
-        tail = [say("Tour finished. /function ac:fly to walk, ac:goto/<world> to revisit a row.", "gold", True)] if last else [
+        card.append(say(f"Stop {i + 1} of {len(stops)}.  ac:tour_next to skip, ac:tour_stop to end.", "dark_gray"))
+        pack.add(f"_t/{i}", [
+            f"$scoreboard players set #cx {NS}_step $(x)", _score_add("#cx", cx),
+            f"$scoreboard players set #cz {NS}_step $(z)", _score_add("#cz", cz),
+            f"$scoreboard players set #py {NS}_step $(y)", _score_add("#py", h),
+            f"$scoreboard players set #fy {NS}_step $(y)", _score_add("#fy", fy),
+            f"scoreboard players set #r {NS}_step {r}",
+            *[f"execute store result storage {NS}:tour {k} int 1 run scoreboard players get #{k} {NS}_step" for k in ("cx", "cz", "py", "fy")],
+            f"scoreboard players set #frame {NS}_step 0",
             f"data modify storage {NS}:tour i set value {i + 1}",
-            f"schedule function {NS}:_tour_next 240t",
-        ]
-        pack.add(f"_t/{i}", [f"$execute positioned $(x) $(y) $(z) run tp @a ~{vx} ~{vy} ~{vz} 180 25"] + card + tail)
+            f"scoreboard players set #tour {NS}_flag 1",
+            f"time set {14000 if festival else 6000}",
+            "title @a times 10 70 20",
+            f"title @a subtitle {sub}",
+            f"title @a title {name}",
+            "execute as @a at @s run playsound minecraft:block.note_block.chime master @s ~ ~ ~ 1 1.2",
+            *card,
+            f"execute as @a[gamemode=spectator] run spectate {cam} @s",
+        ])
+    pack.add(f"_t/{len(stops)}", [f"function {NS}:tour_stop",
+                                   say("Tour finished: every landmark, end to end. /function ac:goto/<world> to go back to one.", "gold", True)])
     index_lines.append(say("Tour (after ac:hub): /function ac:tour; ac:tour_next, ac:tour_stop", "yellow", True))
 
 
@@ -504,6 +585,10 @@ def main() -> None:
         f"scoreboard objectives add {NS}_step dummy",
         f"scoreboard objectives add {NS}_flag dummy",
         f"execute unless score #auto {NS}_flag = #auto {NS}_flag run scoreboard players set #auto {NS}_flag 1",
+        f"scoreboard players set #tour {NS}_flag 0",
+        f"scoreboard players set #c2 {NS}_step 2",
+        f"scoreboard players set #c{ORBIT_STEPS} {NS}_step {ORBIT_STEPS}",
+        f"scoreboard players set #c1000 {NS}_step 1000",
         # No gamerule line here on purpose. Minecraft 26.x renamed
         # maxCommandChainLength to max_command_sequence_length, and a function
         # containing an unknown gamerule fails to parse as a whole, so ac:load
@@ -514,6 +599,7 @@ def main() -> None:
     ])
     pack.add("tick", [
         f"execute if score #auto {NS}_flag matches 1 if entity @a run function {NS}:_autostart",
+        f"execute if score #tour {NS}_flag matches 1 run function {NS}:_tour_frame",
     ])
     pack.add("_autostart", [
         f"scoreboard players set #auto {NS}_flag 2",
@@ -528,8 +614,8 @@ def main() -> None:
     pack.add("cancel", [
         f"schedule clear {NS}:_autobuild",
         f"schedule clear {NS}:_next",
-        f"schedule clear {NS}:_tour_next",
         f"scoreboard players set #auto {NS}_flag 0",
+        f"execute if score #tour {NS}_flag matches 1 run function {NS}:tour_stop",
         "forceload remove all",
         say("AC Worlds: build sequence cancelled and chunks released.", "red"),
     ])
