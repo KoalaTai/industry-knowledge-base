@@ -197,6 +197,32 @@ class PackagingTests(unittest.TestCase):
                 self.assertIn(f"data/ac/structure/{tid}.nbt", names)
             self.assertNotIn("gamerule", zf.read("data/ac/function/load.mcfunction").decode())
 
+    def test_zip_ships_terrain_and_tour(self):
+        with zipfile.ZipFile(self.ZIP) as zf:
+            names = zf.namelist()
+            for fn in ("terrain/hub/holy_land", "terrain/hub/egypt", "terrain/hub_tech/tech_0", "terrain/hub_avatar/atla",
+                       "tour", "_tour_start",
+                       "_tour_next", "_tour_go", "tour_next", "tour_stop", "_t/0", "_t/118"):
+                self.assertIn(f"data/ac/function/{fn}.mcfunction", names, fn)
+            # every terrain fill respects the block-modification limit
+            for n in names:
+                if "/function/terrain/" in n:
+                    for c in zf.read(n).decode().splitlines():
+                        m = FILL.match(c)
+                        if m:
+                            x1, y1, z1, x2, y2, z2 = (_rel(g) for g in m.groups()[:6])
+                            vol = (abs(x2 - x1) + 1) * (abs(y2 - y1) + 1) * (abs(z2 - z1) + 1)
+                            self.assertLessEqual(vol, 32768, c)
+            # the hub lays terrain before the first build of its first row
+            step0 = zf.read("data/ac/function/_s/hub/0.mcfunction").decode()
+            self.assertIn("Holy Land terrain", step0)
+            self.assertIn("function ac:terrain/hub/holy_land", zf.read("data/ac/function/_s/hub/1.mcfunction").decode())
+            t0 = zf.read("data/ac/function/_t/0.mcfunction").decode().splitlines()
+            self.assertRegex(t0[0], r"^\$execute positioned \$\(x\) \$\(y\) \$\(z\) run tp @a ~-?\d* ~-?\d* ~-?\d* 180 25$")
+            self.assertIn("schedule function ac:_tour_next 240t", t0)
+            self.assertIn("$function ac:_t/$(i) with storage ac:tour", zf.read("data/ac/function/_tour_go.mcfunction").decode())
+            self.assertIn("schedule clear ac:_tour_next", zf.read("data/ac/function/cancel.mcfunction").decode())
+
     def test_zip_ships_travel_functions(self):
         with zipfile.ZipFile(self.ZIP) as zf:
             names = zf.namelist()

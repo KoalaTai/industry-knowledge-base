@@ -31,7 +31,7 @@ import os
 import sys
 import textwrap
 import zipfile
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -70,11 +70,158 @@ def forceload_cmds(x1: int, z1: int, x2: int, z2: int, dx: int, dz: int, add: bo
 class Item:
     """A placeable thing: either a world build or a tech model."""
 
-    def __init__(self, seq_id: str, raw_fn: str, name: str, bounds: Tuple[int, int, int, int, int, int]) -> None:
+    def __init__(self, seq_id: str, raw_fn: str, name: str, bounds: Tuple[int, int, int, int, int, int],
+                 meta: Optional[Dict[str, str]] = None) -> None:
         self.seq_id = seq_id          # e.g. "egypt_giza"
         self.raw_fn = raw_fn          # e.g. "raw/egypt/giza"
         self.name = name
         self.bounds = bounds          # x1 y1 z1 x2 y2 z2 relative to its own origin
+        self.meta = meta or {}        # world, era, game, desc, scale (for the tour cards)
+
+    @property
+    def is_terrain(self) -> bool:
+        return self.raw_fn.startswith("terrain/")
+
+
+# ---- hub terrain: one ground pad per row so each world sits in its own landscape
+# world id -> (ground block, accent block for mounds, has a shoreline)
+TERRAIN: Dict[str, Tuple[str, str, bool]] = {
+    "holy_land": ("terracotta", "sandstone", True),
+    "italy": ("grass_block", "coarse_dirt", True),
+    "constantinople": ("grass_block", "stone", True),
+    "colonial_america": ("grass_block", "podzol", True),
+    "caribbean": ("sand", "grass_block", True),
+    "paris": ("grass_block", "stone", True),
+    "chronicles": ("grass_block", "stone", False),
+    "london": ("grass_block", "cobblestone", True),
+    "egypt": ("sand", "sandstone", True),
+    "greece": ("grass_block", "stone", True),
+    "viking": ("grass_block", "snow_block", True),
+    "baghdad": ("sand", "terracotta", True),
+    "japan": ("grass_block", "moss_block", True),
+    "hexe": ("podzol", "coarse_dirt", False),
+    "atla": ("grass_block", "snow_block", True),
+    "korra": ("grass_block", "stone", True),
+    "seven_havens": ("coarse_dirt", "gravel", False),
+    "tech": ("grass_block", "dirt_path", False),
+}
+TERRAIN_MARGIN = 10      # pad extends this far beyond the row's builds
+SHORE_WIDTH = 8          # water strip along the north edge of coastal rows
+FILL_LIMIT = 32768       # vanilla max_block_modifications default
+
+
+def split_fill(x1: int, y1: int, z1: int, x2: int, y2: int, z2: int, block: str) -> List[str]:
+    """/fill commands for a box, split so none exceeds the 32,768-block limit."""
+    out: List[str] = []
+    stack = [(x1, y1, z1, x2, y2, z2)]
+    while stack:
+        a1, b1, c1, a2, b2, c2 = stack.pop()
+        if (a2 - a1 + 1) * (b2 - b1 + 1) * (c2 - c1 + 1) <= FILL_LIMIT:
+            out.append(f"fill ~{a1} ~{b1} ~{c1} ~{a2} ~{b2} ~{c2} minecraft:{block}")
+            continue
+        if a2 - a1 >= c2 - c1:
+            m = (a1 + a2) // 2
+            stack += [(a1, b1, c1, m, b2, c2), (m + 1, b1, c1, a2, b2, c2)]
+        else:
+            m = (c1 + c2) // 2
+            stack += [(a1, b1, c1, a2, b2, m), (a1, b1, m + 1, a2, b2, c2)]
+    return out
+
+
+def layout_hub(pack: Datapack, rows: List[Tuple[str, str, List[Item]]], hub: str,
+               z_start: int = 24) -> List[Tuple[Item, int, int]]:
+    """layout_rows plus a terrain pad per row.
+
+    ``rows`` are (world id, world name, items).  Each row's placements are
+    preceded by a terrain pseudo-item whose function fills the row's ground
+    pad (world-specific block), low mounds in the gaps between builds and,
+    for coastal worlds, a water strip along the north edge.  Coordinates are
+    relative to the hub origin, so the terrain item is placed at (0, 0).
+    """
+    placed: List[Tuple[Item, int, int]] = []
+    cz = z_start
+    for n, (wid, wname, row) in enumerate(rows):
+        if not row:
+            continue
+        ground, accent, shore = TERRAIN.get(wid, TERRAIN["tech"])
+        cx = 0
+        depth = 0
+        row_placed: List[Tuple[Item, int, int]] = []
+        for it in row:
+            x1, _, z1, x2, _, z2 = it.bounds
+            row_placed.append((it, cx - x1, cz - z1))
+            cx += (x2 - x1 + 1) + GAP
+            depth = max(depth, z2 - z1 + 1)
+        rx1, rz1 = -TERRAIN_MARGIN, cz - TERRAIN_MARGIN
+        rx2, rz2 = cx - GAP - 1 + TERRAIN_MARGIN, cz + depth - 1 + TERRAIN_MARGIN
+        cmds = [say(f"Laying out {wname} ...", "gray")]
+        cmds += split_fill(rx1, 0, rz1, rx2, 0, rz2, ground)
+        # mounds in the gaps between neighbouring builds
+        for (a, adx, _), (b, bdx, _) in zip(row_placed, row_placed[1:]):
+            gx = (adx + a.bounds[3] + bdx + b.bounds[0]) // 2
+            gz = cz + depth // 2
+            cmds += [f"fill ~{gx - 4} ~1 ~{gz - 4} ~{gx + 4} ~1 ~{gz + 4} minecraft:{accent}",
+                     f"fill ~{gx - 2} ~2 ~{gz - 2} ~{gx + 2} ~2 ~{gz + 2} minecraft:{ground}",
+                     f"fill ~{gx - 1} ~3 ~{gz - 1} ~{gx} ~3 ~{gz} minecraft:{accent}"]
+        tz1 = rz1
+        if shore:
+            tz1 = rz1 - SHORE_WIDTH
+            cmds += split_fill(rx1, -2, tz1, rx2, -2, rz1 - 1, "sand")
+            cmds += split_fill(rx1, -1, tz1, rx2, 0, rz1 - 1, "water")
+        fn = f"terrain/{hub}/{wid}" if wid != "tech" else f"terrain/{hub}/tech_{n}"   # per hub: row z differs
+        pack.add(fn, cmds)
+        placed.append((Item(f"terrain_{wid}_{n}", fn, f"{wname} terrain", (rx1, -2, tz1, rx2, 3, rz2)), 0, 0))
+        placed += row_placed
+        cz += depth + ROW_GAP
+    return placed
+
+
+def add_tour(pack: Datapack, hub_layout: List[Tuple[Item, int, int]], index_lines: List[str]) -> None:
+    """ac:tour: fly the player from landmark to landmark with a chat card each.
+
+    Stops run every 12 seconds through ``schedule``; ac:tour_next skips ahead,
+    ac:tour_stop ends it.  Positions come from storage ac:hub (adopted from
+    the running hub like ac:goto) copied into storage ac:tour with the stop
+    index.  Scheduled functions have no executor, so the tour addresses @a.
+    """
+    stops = [(it, dx, dz) for it, dx, dz in hub_layout if not it.is_terrain]
+    adopt = [f"execute unless data storage {NS}:hub z if data storage {NS}:seq {{seq:\"hub\"}} "
+             f"run data modify storage {NS}:hub {k} set from storage {NS}:seq {k}" for k in "xyz"]
+    pack.add("tour", adopt + [
+        f"execute unless data storage {NS}:hub x run "
+        + say("No hub built yet: run /function ac:hub first.", "red").replace("tellraw @a", "tellraw @s", 1),
+        f"execute if data storage {NS}:hub x run function {NS}:_tour_start with storage {NS}:hub",
+    ])
+    pack.add("_tour_start", [f"$data modify storage {NS}:tour {k} set value $({k})" for k in "xyz"] + [
+        f"data modify storage {NS}:tour i set value 0",
+        "gamemode spectator @a",
+        say(f"AC Worlds tour: {len(stops)} stops, 12 seconds each. /function ac:tour_next skips, ac:tour_stop ends.", "gold", True),
+        f"function {NS}:_tour_next",
+    ])
+    pack.add("_tour_next", [f"function {NS}:_tour_go with storage {NS}:tour"])
+    pack.add("_tour_go", [f"$function {NS}:_t/$(i) with storage {NS}:tour"])
+    pack.add("tour_next", [f"schedule clear {NS}:_tour_next", f"function {NS}:_tour_next"])
+    pack.add("tour_stop", [f"schedule clear {NS}:_tour_next", say("Tour ended. /function ac:fly to walk, ac:goto/<world> to revisit a row.", "gold")])
+    for i, (it, dx, dz) in enumerate(stops):
+        x1, y1, z1, x2, y2, z2 = it.bounds
+        vx, vz = dx + (x1 + x2) // 2, dz + z2 + 22          # south of the build, looking north
+        vy = min(y2, 70) + 14
+        m = it.meta
+        card = [say(it.name, "gold", True)]
+        if m.get("world") or m.get("era"):
+            card.append(say(" - ".join(s for s in (m.get("world", ""), m.get("era", "")) if s), "yellow"))
+        if m.get("desc"):
+            card += [say(piece, "white") for piece in textwrap.wrap(m["desc"], 90)]
+        if m.get("scale"):
+            card.append(say(f"Scale: {m['scale']}", "gray"))
+        last = i == len(stops) - 1
+        card.append(say(f"Stop {i + 1} of {len(stops)}." + ("" if last else "  Next in 12 s; ac:tour_next to skip, ac:tour_stop to end."), "dark_gray"))
+        tail = [say("Tour finished. /function ac:fly to walk, ac:goto/<world> to revisit a row.", "gold", True)] if last else [
+            f"data modify storage {NS}:tour i set value {i + 1}",
+            f"schedule function {NS}:_tour_next 240t",
+        ]
+        pack.add(f"_t/{i}", [f"$execute positioned $(x) $(y) $(z) run tp @a ~{vx} ~{vy} ~{vz} 180 25"] + card + tail)
+    index_lines.append(say("Tour (after ac:hub): /function ac:tour; ac:tour_next, ac:tour_stop", "yellow", True))
 
 
 def placement(pack: Datapack, v: Voxel, key: str, mode: str) -> List[str]:
@@ -174,6 +321,8 @@ def add_travel(pack: Datapack, hub_layout: List[Tuple[Item, int, int]], worlds, 
     # first placement of every world row (and the tech rows) -> ac:goto/<world>
     first: Dict[str, Tuple[Item, int, int]] = {}
     for it, dx, dz in hub_layout:
+        if it.is_terrain:
+            continue
         wid = it.seq_id.split("_", 1)[0] if it.raw_fn.startswith("raw/tech/") else it.raw_fn.split("/")[1]
         first.setdefault(wid, (it, dx, dz))
     names = {w.id: w.name for w in worlds}
@@ -243,7 +392,8 @@ def main() -> None:
             if b.scale:
                 head.append(say(f"Scale: {b.scale}", "gray"))
             pack.add(raw, head + cmds)
-            item = Item(f"{w.id}_{b.id}", raw, b.name, v.bounds())
+            item = Item(f"{w.id}_{b.id}", raw, b.name, v.bounds(),
+                        meta=dict(world=w.name, era=w.era, game=w.game, desc=b.description, scale=b.scale))
             items.append(item)
             add_sequence(pack, f"{w.id}/{b.id}", [(item, 0, 0)], b.name)
             index_lines.append(say(f"  /function {NS}:{w.id}/{b.id}  -  {b.name} ({size[0]}x{size[2]}, {size[1]} high)", "white"))
@@ -273,7 +423,10 @@ def main() -> None:
                 head.append(say(f"See it in context: /function {NS}:{rec['build']}", "aqua"))
         raw = f"raw/tech/{mid}"
         pack.add(raw, head + cmds)
-        item = Item(f"tech_{mid}", raw, rec["name"] if rec else mid, v.bounds())
+        item = Item(f"tech_{mid}", raw, rec["name"] if rec else mid, v.bounds(),
+                    meta=dict(world=rec["civilization"] if rec else "Premodern technology",
+                              era=rec["period"] if rec else "", game="",
+                              desc=TECH_BUILD_NOTES.get(mid, "") or (rec["summary"] if rec else ""), scale=""))
         tech_items.append(item)
         add_sequence(pack, f"tech/{mid}", [(item, 0, 0)], item.name)
         size = v.size()
@@ -307,12 +460,16 @@ def main() -> None:
     ac_rows = [world_items[w.id] for w in worlds if w.franchise == "Assassin's Creed"]
     av_rows = [world_items[w.id] for w in worlds if w.franchise == "Avatar"]
     tech_rows = [tech_items[i:i + 8] for i in range(0, len(tech_items), 8)]
-    hub_layout = layout_rows(ac_rows + av_rows + tech_rows)
+    ac_named = [(w.id, w.name, world_items[w.id]) for w in worlds if w.franchise == "Assassin's Creed"]
+    av_named = [(w.id, w.name, world_items[w.id]) for w in worlds if w.franchise == "Avatar"]
+    tech_named = [("tech", "Premodern technology", r) for r in tech_rows]
+    hub_layout = layout_hub(pack, ac_named + av_named + tech_named, "hub")
     add_sequence(pack, "hub", hub_layout, "Everything", remember=True)
     add_travel(pack, hub_layout, worlds, index_lines)
-    add_sequence(pack, "hub_assassins_creed", layout_rows(ac_rows), "Assassin's Creed worlds")
-    add_sequence(pack, "hub_avatar", layout_rows(av_rows), "Avatar worlds")
-    add_sequence(pack, "hub_tech", layout_rows(tech_rows), "Premodern technology")
+    add_tour(pack, hub_layout, index_lines)
+    add_sequence(pack, "hub_assassins_creed", layout_hub(pack, ac_named, "hub_assassins_creed"), "Assassin's Creed worlds")
+    add_sequence(pack, "hub_avatar", layout_hub(pack, av_named, "hub_avatar"), "Avatar worlds")
+    add_sequence(pack, "hub_tech", layout_hub(pack, tech_named, "hub_tech"), "Premodern technology")
 
     # ---- plumbing: sequence runner, load, tick, auto-build, cancel, index
     pack.add("_next", [f"function {NS}:_step with storage {NS}:seq"])
@@ -351,6 +508,7 @@ def main() -> None:
     pack.add("cancel", [
         f"schedule clear {NS}:_autobuild",
         f"schedule clear {NS}:_next",
+        f"schedule clear {NS}:_tour_next",
         f"scoreboard players set #auto {NS}_flag 0",
         "forceload remove all",
         say("AC Worlds: build sequence cancelled and chunks released.", "red"),
@@ -365,6 +523,7 @@ def main() -> None:
         say("/function ac:cancel - stop a running sequence; ac:reset_auto - re-arm the first-join auto-build", "white"),
         say("/function ac:fly - creative flight; ac:spirit - spectator ghost mode with night vision", "white"),
         say("/function ac:overview - float above the hub; ac:goto/<world> - jump to that world's row", "white"),
+        say("/function ac:tour - guided flight past every landmark with a card each; ac:tour_next, ac:tour_stop", "white"),
         say("Builds place relative to your feet: stand on flat ground, face north (-z) for the 'front'.", "gray"),
     ])
     # the tick tag
