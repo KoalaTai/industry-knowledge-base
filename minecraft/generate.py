@@ -257,6 +257,11 @@ def add_sequence(pack: Datapack, seq: str, items: List[Tuple[Item, int, int]], t
     ac:goto/<world> can find the hub later, whatever else has run since.
     """
     entry = [
+        # Run by the console (RCON, command block) there is no @s: the origin would
+        # silently become 0 0 0. Refuse and point at the raw function instead.
+        f"execute unless entity @s run " + say(f"ac:{seq} needs a player to stand at the origin. From the console use "
+                                                f"execute positioned <x> <y> <z> run function {NS}:raw/<world>/<build>.", "red"),
+        "execute unless entity @s run return 0",
         f"execute store result storage {NS}:seq x int 1 run data get entity @s Pos[0]",
         f"execute store result storage {NS}:seq y int 1 run data get entity @s Pos[1]",
         f"execute store result storage {NS}:seq z int 1 run data get entity @s Pos[2]",

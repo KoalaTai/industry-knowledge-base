@@ -1,3 +1,5 @@
+execute unless entity @s run tellraw @a {"text": "ac:holy_land/damascus needs a player to stand at the origin. From the console use execute positioned <x> <y> <z> run function ac:raw/<world>/<build>.", "color": "red"}
+execute unless entity @s run return 0
 execute store result storage ac:seq x int 1 run data get entity @s Pos[0]
 execute store result storage ac:seq y int 1 run data get entity @s Pos[1]
 execute store result storage ac:seq z int 1 run data get entity @s Pos[2]
