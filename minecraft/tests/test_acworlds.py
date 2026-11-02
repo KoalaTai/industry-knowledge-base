@@ -207,6 +207,12 @@ class PackagingTests(unittest.TestCase):
             self.assertRegex(goto, r"^\$execute positioned \$\(x\) \$\(y\) \$\(z\) run tp @s ~-?\d* ~-?\d* ~-?\d* -?\d+ -?\d+$")
             hub = zf.read("data/ac/function/hub.mcfunction").decode()
             self.assertIn("data modify storage ac:hub x set from storage ac:seq x", hub)
+            # goto/overview adopt a running hub's origin; the guard must be on the key copied last
+            entry = zf.read("data/ac/function/goto/egypt.mcfunction").decode().splitlines()
+            adopt = [c for c in entry if "set from storage ac:seq" in c]
+            self.assertEqual(len(adopt), 3)
+            self.assertTrue(all(c.startswith("execute unless data storage ac:hub z ") for c in adopt), adopt)
+            self.assertTrue(adopt[-1].endswith("ac:hub z set from storage ac:seq z"))
 
 
 if __name__ == "__main__":

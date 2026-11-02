@@ -143,8 +143,13 @@ def add_travel(pack: Datapack, hub_layout: List[Tuple[Item, int, int]], worlds, 
     def me(text: str, color: str = "light_purple", bold: bool = False) -> str:
         return say(text, color, bold).replace("tellraw @a", "tellraw @s", 1)
 
-    no_hub = (f"execute unless data storage {NS}:hub x run "
-              + me("No hub built yet: run /function ac:hub first (ac:index for single builds).", "red"))
+    # If ac:hub is missing but the current/last sequence *is* the hub (e.g. it
+    # was started before this pack version was loaded), adopt its origin.
+    # Guard on z (copied last) so the x copy does not disarm the y and z copies.
+    adopt = [f"execute unless data storage {NS}:hub z if data storage {NS}:seq {{seq:\"hub\"}} "
+             f"run data modify storage {NS}:hub {k} set from storage {NS}:seq {k}" for k in "xyz"]
+    no_hub = adopt + [f"execute unless data storage {NS}:hub x run "
+                      + me("No hub built yet: run /function ac:hub first (ac:index for single builds).", "red")]
     pack.add("fly", [
         "gamemode creative @s",
         me("Creative: double-tap jump to fly, hold shift to descend. /function ac:spirit for ghost mode.", "aqua"),
@@ -159,7 +164,7 @@ def add_travel(pack: Datapack, hub_layout: List[Tuple[Item, int, int]], worlds, 
     xs = [dx + it.bounds[0] for it, dx, _ in hub_layout] + [dx + it.bounds[3] for it, dx, _ in hub_layout]
     zs = [dz + it.bounds[2] for it, _, dz in hub_layout] + [dz + it.bounds[5] for it, _, dz in hub_layout]
     cx, cz = (min(xs) + max(xs)) // 2, (min(zs) + max(zs)) // 2
-    pack.add("overview", [no_hub, f"execute if data storage {NS}:hub x run function {NS}:_overview with storage {NS}:hub"])
+    pack.add("overview", no_hub + [f"execute if data storage {NS}:hub x run function {NS}:_overview with storage {NS}:hub"])
     pack.add("_overview", [
         "gamemode spectator @s",
         f"$execute positioned $(x) $(y) $(z) run tp @s ~{cx} ~220 ~{cz} 0 90",
@@ -176,7 +181,7 @@ def add_travel(pack: Datapack, hub_layout: List[Tuple[Item, int, int]], worlds, 
     index_lines.append(say("Travel (after ac:hub): /function ac:fly, ac:spirit, ac:overview, ac:goto/<world>", "yellow", True))
     for wid, (it, dx, dz) in first.items():
         tx, tz = dx + it.bounds[0] - 6, dz + it.bounds[2] - 6     # just outside the row's first build
-        pack.add(f"goto/{wid}", [no_hub, f"execute if data storage {NS}:hub x run function {NS}:_goto/{wid} with storage {NS}:hub"])
+        pack.add(f"goto/{wid}", no_hub + [f"execute if data storage {NS}:hub x run function {NS}:_goto/{wid} with storage {NS}:hub"])
         pack.add(f"_goto/{wid}", [
             f"$execute positioned $(x) $(y) $(z) run tp @s ~{tx} ~1 ~{tz} -45 10",
             me(f"{names.get(wid, wid)}: the row starts ahead of you (south-east). First build: {it.name}.", "aqua"),
