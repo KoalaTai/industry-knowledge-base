@@ -1,9 +1,11 @@
 """Run with:  python -m unittest discover -s minecraft/tests  (from the repo root)."""
 
+import json
 import os
 import re
 import sys
 import unittest
+import zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
@@ -69,6 +71,24 @@ class BuildTests(unittest.TestCase):
         ids = [f"{w.id}/{b.id}" for w in all_worlds() for b in w.builds]
         self.assertEqual(len(ids), len(set(ids)))
         self.assertEqual(len({w.id for w in all_worlds()}), len(all_worlds()))
+
+
+class PackagingTests(unittest.TestCase):
+    """The shipped zip must be loadable by Minecraft as-is."""
+
+    ZIP = os.path.join(os.path.dirname(HERE), "datapack", "ac_worlds.zip")
+
+    def test_zip_has_pack_mcmeta_at_root(self):
+        # Minecraft silently ignores a zip whose pack.mcmeta is inside a subfolder.
+        with zipfile.ZipFile(self.ZIP) as zf:
+            names = zf.namelist()
+            self.assertIn("pack.mcmeta", names)
+            self.assertIn("data/minecraft/tags/function/load.json", names)
+            self.assertIn("data/minecraft/tags/function/tick.json", names)
+            self.assertIn("data/ac/function/load.mcfunction", names)
+            self.assertFalse(any(n.startswith("ac_worlds/") for n in names))
+            meta = json.loads(zf.read("pack.mcmeta"))
+            self.assertGreaterEqual(meta["pack"]["pack_format"], 48)
 
 
 if __name__ == "__main__":

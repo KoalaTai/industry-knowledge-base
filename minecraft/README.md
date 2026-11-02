@@ -15,14 +15,15 @@ can change any building and regenerate.
 (Create New World > Creative > World Type Superflat), then from the repo folder:
 
 ```
-python minecraft/install.py
+python3 minecraft/install.py
 ```
 
 It finds your `.minecraft` folder, lists your worlds, copies the pack into the
 one you pick, and prints the three commands to type. Open the world (or `/reload`)
 and it builds itself fifteen seconds after you join. Nothing to install
-beyond Python 3, which macOS and most Linux have; on Windows get it from
-python.org if `python` is not recognised.
+beyond Python 3, which macOS and most Linux have (on macOS the command is
+`python3`, there is no `python`); on Windows use `py minecraft\install.py`
+or get Python from python.org.
 
 **Option A: a fresh world that builds itself (by hand)**
 

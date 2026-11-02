@@ -30,6 +30,7 @@ import json
 import os
 import sys
 import textwrap
+import zipfile
 from typing import Dict, List, Tuple
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -276,6 +277,7 @@ def main() -> None:
     tagdir = os.path.join(args.out, "data", "minecraft", "tags", "function")
     with open(os.path.join(tagdir, "tick.json"), "w", encoding="utf-8") as f:
         json.dump({"values": [f"{NS}:tick"]}, f, indent=2)
+    write_zip(args.out, args.out + ".zip")
 
     # ---- INDEX.md next to the datapack
     with open(os.path.join(HERE, "datapack", "INDEX.md"), "w", encoding="utf-8") as f:
@@ -289,6 +291,22 @@ def main() -> None:
     # ---- knowledge catalogue
     write_catalogue(records)
     print(f"\nwrote {args.out}  ({len(pack.functions)} functions, {total_cmds:,} placement commands)")
+
+
+def write_zip(folder: str, zip_path: str) -> None:
+    """Zip the datapack so pack.mcmeta sits at the ROOT of the archive.
+
+    Minecraft only recognises a zipped datapack when pack.mcmeta is at the top
+    level; a zip that wraps everything in an ``ac_worlds/`` folder is silently
+    ignored (no chat message, no builds).  So we never use ``zip -r`` on the
+    folder itself; we add each file with a path relative to the folder.
+    """
+    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+        for dirpath, dirnames, filenames in os.walk(folder):
+            dirnames.sort()
+            for fn in sorted(filenames):
+                full = os.path.join(dirpath, fn)
+                zf.write(full, os.path.relpath(full, folder).replace(os.sep, "/"))
 
 
 def write_catalogue(records: List[dict]) -> None:

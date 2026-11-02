@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """One-step installer for the AC Worlds datapack.
 
-    python minecraft/install.py            # interactive: pick a world, done
-    python minecraft/install.py --world "My World"
-    python minecraft/install.py --list     # just show your worlds
+    python3 minecraft/install.py            # interactive: pick a world, done
+    python3 minecraft/install.py --world "My World"
+    python3 minecraft/install.py --list     # just show your worlds
+
+(On Windows use ``py`` instead of ``python3``.)
 
 It finds your .minecraft folder (Windows, macOS, Linux), copies
 ac_worlds.zip into <world>/datapacks/, and tells you what to type in game.
