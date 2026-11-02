@@ -1,4 +1,4 @@
-execute positioned ~423 ~ ~3662 run function ac:raw/tech/qanat
-forceload remove ~413 ~3602 ~433 ~3682
-tellraw @a {"text": "Placed Qanat at offset (423, 3662).", "color": "green"}
+execute positioned ~60 ~ ~3200 run function ac:raw/atla/western_air_temple
+forceload remove ~0 ~3160 ~120 ~3260
+tellraw @a {"text": "Placed Western Air Temple at offset (60, 3200).", "color": "green"}
 function ac:_adv

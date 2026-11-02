@@ -1,4 +1,6 @@
-execute positioned ~290 ~ ~536 run function ac:raw/constantinople/theodosian_walls
-forceload remove ~270 ~456 ~340 ~616
-tellraw @a {"text": "Placed Theodosian Walls at offset (290, 536).", "color": "green"}
+execute positioned ~ ~ ~ run function ac:terrain/hub_assassins_creed/constantinople
+forceload remove ~-10 ~438 ~245 ~626
+forceload remove ~246 ~438 ~501 ~626
+forceload remove ~502 ~438 ~562 ~626
+tellraw @a {"text": "Placed Ottoman Constantinople terrain at offset (0, 0).", "color": "green"}
 function ac:_adv

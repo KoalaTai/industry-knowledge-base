@@ -1,4 +1,4 @@
-execute positioned ~1400 ~ ~2939 run function ac:raw/atla/western_air_temple
-forceload remove ~1340 ~2899 ~1460 ~2999
-tellraw @a {"text": "Placed Western Air Temple at offset (1400, 2939).", "color": "green"}
+execute positioned ~235 ~ ~2617 run function ac:raw/japan/kyoto
+forceload remove ~165 ~2557 ~305 ~2677
+tellraw @a {"text": "Placed Kyoto at offset (235, 2617).", "color": "green"}
 function ac:_adv

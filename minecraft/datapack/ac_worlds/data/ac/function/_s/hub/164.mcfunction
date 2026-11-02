@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for Pyramid construction: ramps, sledges and copper tools ...", "color": "gray"}
-forceload add ~0 ~3602 ~80 ~3682
+tellraw @a {"text": "Loading chunks for Ba Sing Se ...", "color": "gray"}
+forceload add ~700 ~2899 ~820 ~3119
 function ac:_adv

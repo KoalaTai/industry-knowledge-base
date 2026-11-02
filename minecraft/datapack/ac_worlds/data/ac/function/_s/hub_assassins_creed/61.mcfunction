@@ -1,4 +1,4 @@
-execute positioned ~90 ~ ~1466 run function ac:raw/london/westminster
-forceload remove ~0 ~1426 ~180 ~1526
-tellraw @a {"text": "Placed Westminster at offset (90, 1466).", "color": "green"}
+execute positioned ~205 ~ ~1051 run function ac:raw/paris/bastille
+forceload remove ~145 ~991 ~265 ~1111
+tellraw @a {"text": "Placed The Bastille at offset (205, 1051).", "color": "green"}
 function ac:_adv

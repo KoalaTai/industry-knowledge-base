@@ -1,4 +1,4 @@
-execute positioned ~30 ~ ~406 run function ac:raw/tech/inca_bridge
-forceload remove ~0 ~396 ~60 ~416
-tellraw @a {"text": "Placed Inca suspension bridges and the Qhapaq Nan at offset (30, 406).", "color": "green"}
+execute positioned ~270 ~ ~303 run function ac:raw/tech/clock_tower
+forceload remove ~262 ~295 ~278 ~311
+tellraw @a {"text": "Placed The mechanical clock and the verge escapement at offset (270, 303).", "color": "green"}
 function ac:_adv

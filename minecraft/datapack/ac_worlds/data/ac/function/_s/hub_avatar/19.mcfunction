@@ -1,4 +1,5 @@
-execute positioned ~1565 ~ ~104 run function ac:raw/atla/boiling_rock
-forceload remove ~1485 ~24 ~1645 ~184
-tellraw @a {"text": "Placed The Boiling Rock at offset (1565, 104).", "color": "green"}
+execute positioned ~ ~ ~ run function ac:terrain/hub_avatar/atla_2
+forceload remove ~-10 ~267 ~245 ~455
+forceload remove ~246 ~267 ~315 ~455
+tellraw @a {"text": "Placed Avatar: The Last Airbender terrain at offset (0, 0).", "color": "green"}
 function ac:_adv

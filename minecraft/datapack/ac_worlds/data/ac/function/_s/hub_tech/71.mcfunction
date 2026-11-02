@@ -1,4 +1,4 @@
-execute positioned ~285 ~ ~426 run function ac:raw/tech/mesoamerican_pyramid
-forceload remove ~255 ~396 ~315 ~456
-tellraw @a {"text": "Placed Mesoamerican pyramids and Maya astronomy at offset (285, 426).", "color": "green"}
+execute positioned ~441 ~ ~325 run function ac:raw/tech/motte_and_bailey
+forceload remove ~405 ~295 ~477 ~355
+tellraw @a {"text": "Placed From motte-and-bailey to the concentric castle at offset (441, 325).", "color": "green"}
 function ac:_adv

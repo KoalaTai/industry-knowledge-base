@@ -1,0 +1,24 @@
+tellraw @a {"text": "Laying out Premodern technology ...", "color": "gray"}
+fill ~239 ~0 ~4646 ~487 ~0 ~4726 minecraft:grass_block
+fill ~-10 ~0 ~4646 ~238 ~0 ~4726 minecraft:grass_block
+fill ~44 ~1 ~4682 ~52 ~1 ~4690 minecraft:dirt_path
+fill ~46 ~2 ~4684 ~50 ~2 ~4688 minecraft:grass_block
+fill ~47 ~3 ~4685 ~48 ~3 ~4686 minecraft:dirt_path
+fill ~105 ~1 ~4682 ~113 ~1 ~4690 minecraft:dirt_path
+fill ~107 ~2 ~4684 ~111 ~2 ~4688 minecraft:grass_block
+fill ~108 ~3 ~4685 ~109 ~3 ~4686 minecraft:dirt_path
+fill ~190 ~1 ~4682 ~198 ~1 ~4690 minecraft:dirt_path
+fill ~192 ~2 ~4684 ~196 ~2 ~4688 minecraft:grass_block
+fill ~193 ~3 ~4685 ~194 ~3 ~4686 minecraft:dirt_path
+fill ~245 ~1 ~4682 ~253 ~1 ~4690 minecraft:dirt_path
+fill ~247 ~2 ~4684 ~251 ~2 ~4688 minecraft:grass_block
+fill ~248 ~3 ~4685 ~249 ~3 ~4686 minecraft:dirt_path
+fill ~286 ~1 ~4682 ~294 ~1 ~4690 minecraft:dirt_path
+fill ~288 ~2 ~4684 ~292 ~2 ~4688 minecraft:grass_block
+fill ~289 ~3 ~4685 ~290 ~3 ~4686 minecraft:dirt_path
+fill ~343 ~1 ~4682 ~351 ~1 ~4690 minecraft:dirt_path
+fill ~345 ~2 ~4684 ~349 ~2 ~4688 minecraft:grass_block
+fill ~346 ~3 ~4685 ~347 ~3 ~4686 minecraft:dirt_path
+fill ~388 ~1 ~4682 ~396 ~1 ~4690 minecraft:dirt_path
+fill ~390 ~2 ~4684 ~394 ~2 ~4688 minecraft:grass_block
+fill ~391 ~3 ~4685 ~392 ~3 ~4686 minecraft:dirt_path

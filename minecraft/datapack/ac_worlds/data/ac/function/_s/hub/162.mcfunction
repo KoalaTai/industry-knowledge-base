@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for Seven Havens Map ...", "color": "gray"}
-forceload add ~429 ~3381 ~589 ~3541
+tellraw @a {"text": "Loading chunks for Omashu ...", "color": "gray"}
+forceload add ~515 ~2899 ~675 ~3059
 function ac:_adv

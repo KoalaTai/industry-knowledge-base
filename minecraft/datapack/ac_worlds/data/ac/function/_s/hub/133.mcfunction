@@ -1,4 +1,4 @@
-execute positioned ~595 ~ ~2979 run function ac:raw/atla/omashu
-forceload remove ~515 ~2899 ~675 ~3059
-tellraw @a {"text": "Placed Omashu at offset (595, 2979).", "color": "green"}
+execute positioned ~350 ~ ~2407 run function ac:raw/baghdad/samarra
+forceload remove ~290 ~2356 ~410 ~2467
+tellraw @a {"text": "Placed Great Mosque of Samarra at offset (350, 2407).", "color": "green"}
 function ac:_adv

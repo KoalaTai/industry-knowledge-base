@@ -1,4 +1,4 @@
-execute positioned ~952 ~ ~1647 run function ac:raw/egypt/cyrene
-forceload remove ~902 ~1607 ~1012 ~1697
-tellraw @a {"text": "Placed Cyrene at offset (952, 1647).", "color": "green"}
+execute positioned ~440 ~ ~1486 run function ac:raw/london/tower_of_london
+forceload remove ~370 ~1426 ~510 ~1546
+tellraw @a {"text": "Placed Tower of London at offset (440, 1486).", "color": "green"}
 function ac:_adv

@@ -1,4 +1,4 @@
-execute positioned ~201 ~ ~3808 run function ac:raw/tech/pound_lock
-forceload remove ~193 ~3788 ~209 ~3832
-tellraw @a {"text": "Placed The Grand Canal and the pound lock at offset (201, 3808).", "color": "green"}
+execute positioned ~110 ~ ~3893 run function ac:raw/insomniac/edc_kineticfield
+forceload remove ~0 ~3803 ~221 ~4003
+tellraw @a {"text": "Placed kineticFIELD at offset (110, 3893).", "color": "green"}
 function ac:_adv

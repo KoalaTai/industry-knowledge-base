@@ -1,4 +1,4 @@
-execute positioned ~380 ~ ~4004 run function ac:raw/tech/great_zimbabwe
-forceload remove ~340 ~3974 ~420 ~4034
-tellraw @a {"text": "Placed Great Zimbabwe and African ironworking at offset (380, 4004).", "color": "green"}
+execute positioned ~188 ~ ~4405 run function ac:raw/tech/obelisk_quarry
+forceload remove ~158 ~4385 ~238 ~4435
+tellraw @a {"text": "Placed Obelisk quarrying and raising at offset (188, 4405).", "color": "green"}
 function ac:_adv

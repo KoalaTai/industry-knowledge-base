@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for Air Temple Island ...", "color": "gray"}
-forceload add ~350 ~3160 ~470 ~3280
+tellraw @a {"text": "Loading chunks for Free Imperial Town ...", "color": "gray"}
+forceload add ~0 ~2728 ~140 ~2858
 function ac:_adv

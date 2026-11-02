@@ -1,4 +1,4 @@
-execute positioned ~175 ~ ~153 run function ac:raw/tech/aqueduct
-forceload remove ~171 ~145 ~255 ~165
-tellraw @a {"text": "Placed Aqueducts at offset (175, 153).", "color": "green"}
+execute positioned ~79 ~ ~153 run function ac:raw/tech/catapult
+forceload remove ~65 ~145 ~93 ~161
+tellraw @a {"text": "Placed Torsion catapults at offset (79, 153).", "color": "green"}
 function ac:_adv

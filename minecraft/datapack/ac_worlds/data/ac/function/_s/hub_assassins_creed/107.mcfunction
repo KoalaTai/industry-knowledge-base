@@ -1,4 +1,4 @@
-execute positioned ~225 ~ ~2396 run function ac:raw/baghdad/house_of_wisdom
-forceload remove ~185 ~2356 ~265 ~2436
-tellraw @a {"text": "Placed House of Wisdom at offset (225, 2396).", "color": "green"}
+execute positioned ~430 ~ ~2014 run function ac:raw/greece/delphi
+forceload remove ~370 ~1954 ~490 ~2094
+tellraw @a {"text": "Placed Delphi at offset (430, 2014).", "color": "green"}
 function ac:_adv

@@ -1,0 +1,23 @@
+tellraw @a {"text": "Laying out Renaissance Italy ...", "color": "gray"}
+fill ~674 ~0 ~311 ~900 ~0 ~425 minecraft:grass_block
+fill ~674 ~0 ~195 ~900 ~0 ~310 minecraft:grass_block
+fill ~446 ~0 ~311 ~673 ~0 ~425 minecraft:grass_block
+fill ~446 ~0 ~195 ~673 ~0 ~310 minecraft:grass_block
+fill ~218 ~0 ~311 ~445 ~0 ~425 minecraft:grass_block
+fill ~218 ~0 ~195 ~445 ~0 ~310 minecraft:grass_block
+fill ~-10 ~0 ~311 ~217 ~0 ~425 minecraft:grass_block
+fill ~-10 ~0 ~195 ~217 ~0 ~310 minecraft:grass_block
+fill ~178 ~1 ~306 ~186 ~1 ~314 minecraft:coarse_dirt
+fill ~180 ~2 ~308 ~184 ~2 ~312 minecraft:grass_block
+fill ~181 ~3 ~309 ~182 ~3 ~310 minecraft:coarse_dirt
+fill ~323 ~1 ~306 ~331 ~1 ~314 minecraft:coarse_dirt
+fill ~325 ~2 ~308 ~329 ~2 ~312 minecraft:grass_block
+fill ~326 ~3 ~309 ~327 ~3 ~310 minecraft:coarse_dirt
+fill ~508 ~1 ~306 ~516 ~1 ~314 minecraft:coarse_dirt
+fill ~510 ~2 ~308 ~514 ~2 ~312 minecraft:grass_block
+fill ~511 ~3 ~309 ~512 ~3 ~310 minecraft:coarse_dirt
+fill ~773 ~1 ~306 ~781 ~1 ~314 minecraft:coarse_dirt
+fill ~775 ~2 ~308 ~779 ~2 ~312 minecraft:grass_block
+fill ~776 ~3 ~309 ~777 ~3 ~310 minecraft:coarse_dirt
+fill ~-10 ~-2 ~187 ~900 ~-2 ~194 minecraft:sand
+fill ~-10 ~-1 ~187 ~900 ~0 ~194 minecraft:water

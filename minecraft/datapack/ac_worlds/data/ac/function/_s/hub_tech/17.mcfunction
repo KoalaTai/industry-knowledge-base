@@ -1,4 +1,4 @@
-execute positioned ~20 ~ ~153 run function ac:raw/tech/antikythera
-forceload remove ~0 ~145 ~40 ~161
-tellraw @a {"text": "Placed Antikythera mechanism at offset (20, 153).", "color": "green"}
+execute positioned ~509 ~ ~38 run function ac:raw/tech/archimedes_screw
+forceload remove ~503 ~24 ~535 ~48
+tellraw @a {"text": "Placed Archimedes' screw at offset (509, 38).", "color": "green"}
 function ac:_adv

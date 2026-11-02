@@ -1,4 +1,4 @@
-execute positioned ~361 ~ ~3731 run function ac:raw/tech/roman_road
-forceload remove ~357 ~3723 ~421 ~3739
-tellraw @a {"text": "Placed Roman roads at offset (361, 3731).", "color": "green"}
+execute positioned ~950 ~ ~3421 run function ac:raw/korra/future_industries
+forceload remove ~870 ~3361 ~1030 ~3481
+tellraw @a {"text": "Placed Future Industries at offset (950, 3421).", "color": "green"}
 function ac:_adv

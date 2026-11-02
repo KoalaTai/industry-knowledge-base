@@ -1,4 +1,4 @@
-execute positioned ~905 ~ ~2949 run function ac:raw/atla/kyoshi_island
-forceload remove ~845 ~2899 ~965 ~3009
-tellraw @a {"text": "Placed Kyoshi Island at offset (905, 2949).", "color": "green"}
+execute positioned ~640 ~ ~2396 run function ac:raw/baghdad/bazaar
+forceload remove ~580 ~2356 ~700 ~2449
+tellraw @a {"text": "Placed Karkh Bazaar at offset (640, 2396).", "color": "green"}
 function ac:_adv

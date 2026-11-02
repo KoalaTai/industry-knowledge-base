@@ -1,4 +1,4 @@
-execute positioned ~299 ~ ~3808 run function ac:raw/tech/stepwell
-forceload remove ~279 ~3788 ~319 ~3832
-tellraw @a {"text": "Placed Stepwells (baori, vav) at offset (299, 3808).", "color": "green"}
+execute positioned ~571 ~ ~3861 run function ac:raw/insomniac/edc_circuitgrounds
+forceload remove ~481 ~3803 ~661 ~3961
+tellraw @a {"text": "Placed circuitGROUNDS at offset (571, 3861).", "color": "green"}
 function ac:_adv

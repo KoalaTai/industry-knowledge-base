@@ -1,4 +1,4 @@
-execute positioned ~495 ~ ~2416 run function ac:raw/baghdad/alamut
-forceload remove ~435 ~2356 ~555 ~2476
-tellraw @a {"text": "Placed Alamut at offset (495, 2416).", "color": "green"}
+execute positioned ~700 ~ ~2034 run function ac:raw/greece/atlantis
+forceload remove ~620 ~1954 ~780 ~2114
+tellraw @a {"text": "Placed Atlantis at offset (700, 2034).", "color": "green"}
 function ac:_adv

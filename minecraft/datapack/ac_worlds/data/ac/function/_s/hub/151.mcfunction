@@ -1,4 +1,4 @@
-execute positioned ~410 ~ ~3220 run function ac:raw/korra/air_temple_island
-forceload remove ~350 ~3160 ~470 ~3280
-tellraw @a {"text": "Placed Air Temple Island at offset (410, 3220).", "color": "green"}
+execute positioned ~70 ~ ~2788 run function ac:raw/hexe/free_town
+forceload remove ~0 ~2728 ~140 ~2858
+tellraw @a {"text": "Placed Free Imperial Town at offset (70, 2788).", "color": "green"}
 function ac:_adv

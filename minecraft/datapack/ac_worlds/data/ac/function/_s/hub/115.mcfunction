@@ -1,4 +1,4 @@
-execute positioned ~70 ~ ~2617 run function ac:raw/japan/azuchi
-forceload remove ~0 ~2557 ~140 ~2687
-tellraw @a {"text": "Placed Azuchi Castle at offset (70, 2617).", "color": "green"}
+execute positioned ~70 ~ ~2205 run function ac:raw/viking/ravensthorpe
+forceload remove ~0 ~2155 ~140 ~2265
+tellraw @a {"text": "Placed Ravensthorpe at offset (70, 2205).", "color": "green"}
 function ac:_adv

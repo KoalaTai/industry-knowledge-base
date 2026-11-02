@@ -1,4 +1,4 @@
-execute positioned ~175 ~ ~3731 run function ac:raw/tech/aqueduct
-forceload remove ~171 ~3723 ~255 ~3743
-tellraw @a {"text": "Placed Aqueducts at offset (175, 3731).", "color": "green"}
+execute positioned ~585 ~ ~3451 run function ac:raw/korra/zaofu
+forceload remove ~495 ~3361 ~675 ~3541
+tellraw @a {"text": "Placed Zaofu at offset (585, 3451).", "color": "green"}
 function ac:_adv

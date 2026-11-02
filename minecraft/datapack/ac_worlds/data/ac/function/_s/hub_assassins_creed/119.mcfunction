@@ -1,4 +1,4 @@
-execute positioned ~400 ~ ~2617 run function ac:raw/japan/iga
-forceload remove ~330 ~2557 ~470 ~2677
-tellraw @a {"text": "Placed Iga Province at offset (400, 2617).", "color": "green"}
+execute positioned ~420 ~ ~2215 run function ac:raw/viking/jorvik
+forceload remove ~350 ~2155 ~490 ~2275
+tellraw @a {"text": "Placed Jorvik at offset (420, 2215).", "color": "green"}
 function ac:_adv

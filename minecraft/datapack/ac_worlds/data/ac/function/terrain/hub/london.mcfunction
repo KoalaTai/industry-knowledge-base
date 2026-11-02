@@ -1,0 +1,23 @@
+tellraw @a {"text": "Laying out Victorian London ...", "color": "gray"}
+fill ~744 ~0 ~1416 ~850 ~0 ~1576 minecraft:grass_block
+fill ~636 ~0 ~1416 ~743 ~0 ~1576 minecraft:grass_block
+fill ~529 ~0 ~1416 ~635 ~0 ~1576 minecraft:grass_block
+fill ~421 ~0 ~1416 ~528 ~0 ~1576 minecraft:grass_block
+fill ~314 ~0 ~1416 ~420 ~0 ~1576 minecraft:grass_block
+fill ~206 ~0 ~1416 ~313 ~0 ~1576 minecraft:grass_block
+fill ~98 ~0 ~1416 ~205 ~0 ~1576 minecraft:grass_block
+fill ~-10 ~0 ~1416 ~97 ~0 ~1576 minecraft:grass_block
+fill ~188 ~1 ~1492 ~196 ~1 ~1500 minecraft:cobblestone
+fill ~190 ~2 ~1494 ~194 ~2 ~1498 minecraft:grass_block
+fill ~191 ~3 ~1495 ~192 ~3 ~1496 minecraft:cobblestone
+fill ~353 ~1 ~1492 ~361 ~1 ~1500 minecraft:cobblestone
+fill ~355 ~2 ~1494 ~359 ~2 ~1498 minecraft:grass_block
+fill ~356 ~3 ~1495 ~357 ~3 ~1496 minecraft:cobblestone
+fill ~518 ~1 ~1492 ~526 ~1 ~1500 minecraft:cobblestone
+fill ~520 ~2 ~1494 ~524 ~2 ~1498 minecraft:grass_block
+fill ~521 ~3 ~1495 ~522 ~3 ~1496 minecraft:cobblestone
+fill ~703 ~1 ~1492 ~711 ~1 ~1500 minecraft:cobblestone
+fill ~705 ~2 ~1494 ~709 ~2 ~1498 minecraft:grass_block
+fill ~706 ~3 ~1495 ~707 ~3 ~1496 minecraft:cobblestone
+fill ~-10 ~-2 ~1408 ~850 ~-2 ~1415 minecraft:sand
+fill ~-10 ~-1 ~1408 ~850 ~0 ~1415 minecraft:water

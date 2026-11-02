@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for House of Wisdom ...", "color": "gray"}
-forceload add ~185 ~2356 ~265 ~2436
+tellraw @a {"text": "Loading chunks for Delphi ...", "color": "gray"}
+forceload add ~370 ~1954 ~490 ~2094
 function ac:_adv

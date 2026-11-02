@@ -1,4 +1,4 @@
-execute positioned ~840 ~ ~255 run function ac:raw/italy/san_gimignano
-forceload remove ~790 ~205 ~890 ~305
-tellraw @a {"text": "Placed San Gimignano at offset (840, 255).", "color": "green"}
+execute positioned ~420 ~ ~265 run function ac:raw/italy/venice
+forceload remove ~340 ~205 ~500 ~335
+tellraw @a {"text": "Placed Venice at offset (420, 265).", "color": "green"}
 function ac:_adv

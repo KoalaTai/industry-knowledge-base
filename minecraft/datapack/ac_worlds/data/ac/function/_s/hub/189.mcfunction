@@ -1,4 +1,4 @@
-execute positioned ~284 ~ ~3727 run function ac:raw/tech/arch
-forceload remove ~280 ~3723 ~332 ~3747
-tellraw @a {"text": "Placed The arch, the vault and the dome at offset (284, 3727).", "color": "green"}
+execute positioned ~773 ~ ~3431 run function ac:raw/korra/spirit_wilds
+forceload remove ~700 ~3361 ~845 ~3501
+tellraw @a {"text": "Placed Spirit Wilds at offset (773, 3431).", "color": "green"}
 function ac:_adv

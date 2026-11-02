@@ -1,4 +1,4 @@
-execute positioned ~420 ~ ~2969 run function ac:raw/atla/southern_air_temple
-forceload remove ~350 ~2899 ~490 ~3039
-tellraw @a {"text": "Placed Southern Air Temple at offset (420, 2969).", "color": "green"}
+execute positioned ~225 ~ ~2396 run function ac:raw/baghdad/house_of_wisdom
+forceload remove ~185 ~2356 ~265 ~2436
+tellraw @a {"text": "Placed House of Wisdom at offset (225, 2396).", "color": "green"}
 function ac:_adv

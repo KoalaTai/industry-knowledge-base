@@ -1,4 +1,4 @@
-execute positioned ~70 ~ ~2205 run function ac:raw/viking/ravensthorpe
-forceload remove ~0 ~2155 ~140 ~2265
-tellraw @a {"text": "Placed Ravensthorpe at offset (70, 2205).", "color": "green"}
+execute positioned ~567 ~ ~1667 run function ac:raw/egypt/siwa
+forceload remove ~507 ~1607 ~627 ~1727
+tellraw @a {"text": "Placed Siwa Oasis at offset (567, 1667).", "color": "green"}
 function ac:_adv

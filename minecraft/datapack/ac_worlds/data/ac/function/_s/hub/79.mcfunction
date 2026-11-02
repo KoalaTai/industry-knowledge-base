@@ -1,4 +1,4 @@
-execute positioned ~817 ~ ~1667 run function ac:raw/egypt/nile
-forceload remove ~777 ~1607 ~877 ~1727
-tellraw @a {"text": "Placed The Nile at offset (817, 1667).", "color": "green"}
+execute positioned ~275 ~ ~1496 run function ac:raw/london/st_pauls
+forceload remove ~205 ~1426 ~345 ~1566
+tellraw @a {"text": "Placed St Paul's Cathedral at offset (275, 1496).", "color": "green"}
 function ac:_adv

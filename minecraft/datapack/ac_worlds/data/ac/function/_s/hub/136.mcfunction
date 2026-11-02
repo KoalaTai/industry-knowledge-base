@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for Kyoshi Island ...", "color": "gray"}
-forceload add ~845 ~2899 ~965 ~3009
+tellraw @a {"text": "Loading chunks for Karkh Bazaar ...", "color": "gray"}
+forceload add ~580 ~2356 ~700 ~2449
 function ac:_adv

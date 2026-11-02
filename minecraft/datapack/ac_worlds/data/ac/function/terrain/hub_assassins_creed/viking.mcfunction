@@ -1,0 +1,26 @@
+tellraw @a {"text": "Laying out Viking England and Norway ...", "color": "gray"}
+fill ~857 ~0 ~2145 ~979 ~0 ~2325 minecraft:grass_block
+fill ~733 ~0 ~2145 ~856 ~0 ~2325 minecraft:grass_block
+fill ~609 ~0 ~2145 ~732 ~0 ~2325 minecraft:grass_block
+fill ~485 ~0 ~2145 ~608 ~0 ~2325 minecraft:grass_block
+fill ~362 ~0 ~2145 ~484 ~0 ~2325 minecraft:grass_block
+fill ~238 ~0 ~2145 ~361 ~0 ~2325 minecraft:grass_block
+fill ~114 ~0 ~2145 ~237 ~0 ~2325 minecraft:grass_block
+fill ~-10 ~0 ~2145 ~113 ~0 ~2325 minecraft:grass_block
+fill ~148 ~1 ~2231 ~156 ~1 ~2239 minecraft:snow_block
+fill ~150 ~2 ~2233 ~154 ~2 ~2237 minecraft:grass_block
+fill ~151 ~3 ~2234 ~152 ~3 ~2235 minecraft:snow_block
+fill ~333 ~1 ~2231 ~341 ~1 ~2239 minecraft:snow_block
+fill ~335 ~2 ~2233 ~339 ~2 ~2237 minecraft:grass_block
+fill ~336 ~3 ~2234 ~337 ~3 ~2235 minecraft:snow_block
+fill ~498 ~1 ~2231 ~506 ~1 ~2239 minecraft:snow_block
+fill ~500 ~2 ~2233 ~504 ~2 ~2237 minecraft:grass_block
+fill ~501 ~3 ~2234 ~502 ~3 ~2235 minecraft:snow_block
+fill ~603 ~1 ~2231 ~611 ~1 ~2239 minecraft:snow_block
+fill ~605 ~2 ~2233 ~609 ~2 ~2237 minecraft:grass_block
+fill ~606 ~3 ~2234 ~607 ~3 ~2235 minecraft:snow_block
+fill ~788 ~1 ~2231 ~796 ~1 ~2239 minecraft:snow_block
+fill ~790 ~2 ~2233 ~794 ~2 ~2237 minecraft:grass_block
+fill ~791 ~3 ~2234 ~792 ~3 ~2235 minecraft:snow_block
+fill ~-10 ~-2 ~2137 ~979 ~-2 ~2144 minecraft:sand
+fill ~-10 ~-1 ~2137 ~979 ~0 ~2144 minecraft:water

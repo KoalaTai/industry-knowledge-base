@@ -1,4 +1,4 @@
-execute positioned ~1080 ~ ~114 run function ac:raw/atla/fire_nation_capital
-forceload remove ~990 ~24 ~1170 ~204
-tellraw @a {"text": "Placed Fire Nation Capital at offset (1080, 114).", "color": "green"}
+execute positioned ~905 ~ ~74 run function ac:raw/atla/kyoshi_island
+forceload remove ~845 ~24 ~965 ~134
+tellraw @a {"text": "Placed Kyoshi Island at offset (905, 74).", "color": "green"}
 function ac:_adv

@@ -1,4 +1,4 @@
-execute positioned ~244 ~ ~3798 run function ac:raw/tech/iron_pillar
-forceload remove ~234 ~3788 ~254 ~3808
-tellraw @a {"text": "Placed The Iron Pillar of Delhi at offset (244, 3798).", "color": "green"}
+execute positioned ~351 ~ ~3873 run function ac:raw/insomniac/edc_cosmicmeadow
+forceload remove ~246 ~3803 ~456 ~3983
+tellraw @a {"text": "Placed cosmicMEADOW at offset (351, 3873).", "color": "green"}
 function ac:_adv

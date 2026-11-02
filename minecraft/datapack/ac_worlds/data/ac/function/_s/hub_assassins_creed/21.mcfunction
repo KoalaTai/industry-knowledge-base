@@ -1,4 +1,4 @@
-execute positioned ~195 ~ ~496 run function ac:raw/constantinople/galata
-forceload remove ~145 ~456 ~245 ~556
-tellraw @a {"text": "Placed Galata Tower at offset (195, 496).", "color": "green"}
+execute positioned ~840 ~ ~255 run function ac:raw/italy/san_gimignano
+forceload remove ~790 ~205 ~890 ~305
+tellraw @a {"text": "Placed San Gimignano at offset (840, 255).", "color": "green"}
 function ac:_adv

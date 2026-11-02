@@ -1,4 +1,4 @@
-execute positioned ~773 ~ ~355 run function ac:raw/korra/spirit_wilds
-forceload remove ~700 ~285 ~845 ~425
-tellraw @a {"text": "Placed Spirit Wilds at offset (773, 355).", "color": "green"}
+execute positioned ~265 ~ ~546 run function ac:raw/korra/pro_bending_arena
+forceload remove ~205 ~486 ~325 ~606
+tellraw @a {"text": "Placed Pro-bending Arena at offset (265, 546).", "color": "green"}
 function ac:_adv

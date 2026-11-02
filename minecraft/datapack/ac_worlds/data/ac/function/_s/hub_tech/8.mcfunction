@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for The wheel, the potter's wheel and the spoked-wheel chariot ...", "color": "gray"}
-forceload add ~348 ~24 ~388 ~44
+tellraw @a {"text": "Loading chunks for Ziggurats and fired brick ...", "color": "gray"}
+forceload add ~263 ~24 ~323 ~90
 function ac:_adv

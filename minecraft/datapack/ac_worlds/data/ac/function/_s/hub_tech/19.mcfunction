@@ -1,4 +1,6 @@
-execute positioned ~79 ~ ~153 run function ac:raw/tech/catapult
-forceload remove ~65 ~145 ~93 ~161
-tellraw @a {"text": "Placed Torsion catapults at offset (79, 153).", "color": "green"}
+execute positioned ~ ~ ~ run function ac:terrain/hub_tech/tech_1
+forceload remove ~-10 ~135 ~245 ~179
+forceload remove ~246 ~135 ~501 ~179
+forceload remove ~502 ~135 ~535 ~179
+tellraw @a {"text": "Placed Premodern technology terrain at offset (0, 0).", "color": "green"}
 function ac:_adv

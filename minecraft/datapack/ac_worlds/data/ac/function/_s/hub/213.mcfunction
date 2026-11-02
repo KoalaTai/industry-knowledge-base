@@ -1,4 +1,4 @@
-execute positioned ~16 ~ ~3885 run function ac:raw/tech/noria
-forceload remove ~0 ~3873 ~36 ~3899
-tellraw @a {"text": "Placed Noria and saqiya waterwheels at offset (16, 3885).", "color": "green"}
+execute positioned ~1196 ~ ~3873 run function ac:raw/insomniac/edc_wasteland
+forceload remove ~1096 ~3803 ~1296 ~3973
+tellraw @a {"text": "Placed wasteLAND at offset (1196, 3873).", "color": "green"}
 function ac:_adv

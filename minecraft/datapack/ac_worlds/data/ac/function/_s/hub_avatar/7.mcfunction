@@ -1,4 +1,4 @@
-execute positioned ~595 ~ ~104 run function ac:raw/atla/omashu
-forceload remove ~515 ~24 ~675 ~184
-tellraw @a {"text": "Placed Omashu at offset (595, 104).", "color": "green"}
+execute positioned ~420 ~ ~94 run function ac:raw/atla/southern_air_temple
+forceload remove ~350 ~24 ~490 ~164
+tellraw @a {"text": "Placed Southern Air Temple at offset (420, 94).", "color": "green"}
 function ac:_adv

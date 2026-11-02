@@ -1,4 +1,4 @@
-execute positioned ~80 ~ ~2436 run function ac:raw/baghdad/round_city
-forceload remove ~0 ~2356 ~160 ~2516
-tellraw @a {"text": "Placed The Round City at offset (80, 2436).", "color": "green"}
+execute positioned ~275 ~ ~2014 run function ac:raw/greece/sparta
+forceload remove ~205 ~1954 ~345 ~2074
+tellraw @a {"text": "Placed Sparta at offset (275, 2014).", "color": "green"}
 function ac:_adv

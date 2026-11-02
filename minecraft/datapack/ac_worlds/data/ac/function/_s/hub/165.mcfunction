@@ -1,4 +1,4 @@
-execute positioned ~40 ~ ~3632 run function ac:raw/tech/pyramid_ramp
-forceload remove ~0 ~3602 ~80 ~3682
-tellraw @a {"text": "Placed Pyramid construction: ramps, sledges and copper tools at offset (40, 3632).", "color": "green"}
+execute positioned ~760 ~ ~3059 run function ac:raw/atla/ba_sing_se
+forceload remove ~700 ~2899 ~820 ~3119
+tellraw @a {"text": "Placed Ba Sing Se at offset (760, 3059).", "color": "green"}
 function ac:_adv

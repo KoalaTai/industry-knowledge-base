@@ -7,14 +7,14 @@ tellraw @s {"text": "  /function ac:holy_land/acre  -  Acre (131x111, 31 high)",
 tellraw @s {"text": "  /function ac:holy_land/damascus  -  Damascus (141x121, 44 high)", "color": "white"}
 tellraw @s {"text": "[Assassin's Creed] Renaissance Italy - Assassin's Creed II (2009) / Brotherhood (2010) (1476-1507)", "color": "yellow", "bold": true}
 tellraw @s {"text": "  /function ac:italy/all", "color": "aqua"}
-tellraw @s {"text": "  /function ac:italy/florence  -  Florence (171x166, 55 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:italy/florence  -  Florence (171x167, 60 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:italy/monteriggioni  -  Monteriggioni (121x121, 28 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:italy/venice  -  Venice (161x131, 70 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:italy/rome  -  Rome (241x211, 47 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:italy/san_gimignano  -  San Gimignano (101x101, 41 high)", "color": "white"}
 tellraw @s {"text": "[Assassin's Creed] Ottoman Constantinople - Assassin's Creed Revelations (2011) (1511-1512)", "color": "yellow", "bold": true}
 tellraw @s {"text": "  /function ac:constantinople/all", "color": "aqua"}
-tellraw @s {"text": "  /function ac:constantinople/hagia_sophia  -  Hagia Sophia (121x131, 54 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:constantinople/hagia_sophia  -  Hagia Sophia (121x131, 55 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:constantinople/galata  -  Galata Tower (101x101, 66 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:constantinople/theodosian_walls  -  Theodosian Walls (71x161, 23 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:constantinople/derinkuyu  -  Derinkuyu (81x81, 51 high)", "color": "white"}
@@ -52,7 +52,7 @@ tellraw @s {"text": "  /function ac:london/thames_rail  -  The Thames and the Ra
 tellraw @s {"text": "  /function ac:london/london_streets  -  East End Streets (121x121, 20 high)", "color": "white"}
 tellraw @s {"text": "[Assassin's Creed] Ptolemaic Egypt - Assassin's Creed Origins (2017) (49-43 BCE, reign of Ptolemy XIII and Cleopatra VII)", "color": "yellow", "bold": true}
 tellraw @s {"text": "  /function ac:egypt/all", "color": "aqua"}
-tellraw @s {"text": "  /function ac:egypt/giza  -  Giza Plateau (318x307, 65 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:egypt/giza  -  Giza Plateau (318x307, 68 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:egypt/alexandria  -  Alexandria: Pharos and Library (141x131, 82 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:egypt/siwa  -  Siwa Oasis (121x121, 21 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:egypt/memphis  -  Memphis: Temple of Ptah (101x111, 21 high)", "color": "white"}
@@ -104,7 +104,7 @@ tellraw @s {"text": "  /function ac:atla/western_air_temple  -  Western Air Temp
 tellraw @s {"text": "  /function ac:atla/boiling_rock  -  The Boiling Rock (161x161, 22 high)", "color": "white"}
 tellraw @s {"text": "[Avatar] The Legend of Korra - The Legend of Korra (Nickelodeon, 2012-2014) (170-174 AG)", "color": "yellow", "bold": true}
 tellraw @s {"text": "  /function ac:korra/all", "color": "aqua"}
-tellraw @s {"text": "  /function ac:korra/republic_city  -  Republic City (181x161, 88 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:korra/republic_city  -  Republic City (181x161, 80 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:korra/pro_bending_arena  -  Pro-bending Arena (121x121, 68 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:korra/air_temple_island  -  Air Temple Island (121x121, 44 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:korra/zaofu  -  Zaofu (181x181, 32 high)", "color": "white"}
@@ -115,6 +115,21 @@ tellraw @s {"text": "  /function ac:seven_havens/all", "color": "aqua"}
 tellraw @s {"text": "  /function ac:seven_havens/haven  -  A Haven (181x181, 34 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:seven_havens/wastes  -  The Wastes (200x181, 29 high)", "color": "white"}
 tellraw @s {"text": "  /function ac:seven_havens/seven_havens_map  -  Seven Havens Map (161x161, 18 high)", "color": "white"}
+tellraw @s {"text": "[Insomniac Events] Insomniac Events - EDC Las Vegas, Beyond Wonderland, Escape Halloween, Nocturnal Wonderland, Countdown NYE (1993-2026)", "color": "yellow", "bold": true}
+tellraw @s {"text": "  /function ac:insomniac/all", "color": "aqua"}
+tellraw @s {"text": "  /function ac:insomniac/edc_kineticfield  -  kineticFIELD (222x201, 89 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:insomniac/edc_cosmicmeadow  -  cosmicMEADOW (211x181, 32 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:insomniac/edc_circuitgrounds  -  circuitGROUNDS (181x159, 63 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:insomniac/edc_neongarden  -  neonGARDEN (181x181, 37 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:insomniac/edc_basspod  -  bassPOD (181x196, 45 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:insomniac/edc_wasteland  -  wasteLAND (201x171, 39 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:insomniac/edc_quantumvalley  -  quantumVALLEY (201x183, 49 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:insomniac/edc_bionicjungle  -  bionicJUNGLE (181x186, 60 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:insomniac/edc_stereobloom  -  stereoBLOOM (181x171, 60 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:insomniac/edc_grounds  -  EDC Las Vegas grounds (301x301, 62 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:insomniac/nos_events_center  -  NOS Events Center (221x221, 50 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:insomniac/escape_psycho_circus  -  Escape: Psycho Circus (223x210, 60 high)", "color": "white"}
+tellraw @s {"text": "  /function ac:insomniac/nocturnal_wonderland  -  Nocturnal Wonderland (221x201, 68 high)", "color": "white"}
 tellraw @s {"text": "Premodern technology models (see knowledge/README.md)", "color": "yellow", "bold": true}
 tellraw @s {"text": "  /function ac:hub_tech", "color": "aqua"}
 tellraw @s {"text": "  /function ac:tech/pyramid_ramp  -  Pyramid construction: ramps, sledges and copper tools (81x81)", "color": "white"}
@@ -172,4 +187,9 @@ tellraw @s {"text": "  /function ac:goto/hexe  -  Holy Roman Empire (Hexe)", "co
 tellraw @s {"text": "  /function ac:goto/atla  -  Avatar: The Last Airbender", "color": "white"}
 tellraw @s {"text": "  /function ac:goto/korra  -  The Legend of Korra", "color": "white"}
 tellraw @s {"text": "  /function ac:goto/seven_havens  -  Avatar: Seven Havens", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/insomniac  -  Insomniac Events", "color": "white"}
 tellraw @s {"text": "  /function ac:goto/tech  -  Premodern technology", "color": "white"}
+tellraw @s {"text": "Tour (after ac:hub): /function ac:tour; ac:tour_next, ac:tour_stop", "color": "yellow", "bold": true}
+tellraw @s {"text": "  /function ac:hub_assassins_creed  -  every Assassin's Creed world in rows", "color": "aqua"}
+tellraw @s {"text": "  /function ac:hub_avatar  -  every Avatar world in rows", "color": "aqua"}
+tellraw @s {"text": "  /function ac:hub_insomniac_events  -  every Insomniac Events world in rows", "color": "aqua"}

@@ -1,4 +1,4 @@
-execute positioned ~885 ~ ~2215 run function ac:raw/viking/norway
-forceload remove ~805 ~2155 ~969 ~2275
-tellraw @a {"text": "Placed Rygjafylke Fjord at offset (885, 2215).", "color": "green"}
+execute positioned ~90 ~ ~2034 run function ac:raw/greece/athens
+forceload remove ~0 ~1954 ~180 ~2114
+tellraw @a {"text": "Placed Athens at offset (90, 2034).", "color": "green"}
 function ac:_adv

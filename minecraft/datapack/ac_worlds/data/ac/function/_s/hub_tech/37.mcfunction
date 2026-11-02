@@ -1,4 +1,5 @@
-execute positioned ~154 ~ ~218 run function ac:raw/tech/blast_furnace
-forceload remove ~142 ~210 ~168 ~228
-tellraw @a {"text": "Placed Chinese cast iron and the water-powered blast furnace at offset (154, 218).", "color": "green"}
+execute positioned ~ ~ ~ run function ac:terrain/hub_tech/tech_2
+forceload remove ~-10 ~200 ~245 ~264
+forceload remove ~246 ~200 ~432 ~264
+tellraw @a {"text": "Placed Premodern technology terrain at offset (0, 0).", "color": "green"}
 function ac:_adv

@@ -1,4 +1,4 @@
-execute positioned ~245 ~ ~2215 run function ac:raw/viking/lunden
-forceload remove ~165 ~2155 ~325 ~2275
-tellraw @a {"text": "Placed Lunden at offset (245, 2215).", "color": "green"}
+execute positioned ~692 ~ ~1637 run function ac:raw/egypt/memphis
+forceload remove ~652 ~1607 ~752 ~1717
+tellraw @a {"text": "Placed Memphis: Temple of Ptah at offset (692, 1637).", "color": "green"}
 function ac:_adv

@@ -1,4 +1,5 @@
-execute positioned ~368 ~ ~3612 run function ac:raw/tech/chariot
-forceload remove ~348 ~3602 ~388 ~3622
-tellraw @a {"text": "Placed The wheel, the potter's wheel and the spoked-wheel chariot at offset (368, 3612).", "color": "green"}
+execute positioned ~ ~ ~ run function ac:terrain/hub/atla_2
+forceload remove ~-10 ~3142 ~245 ~3330
+forceload remove ~246 ~3142 ~315 ~3330
+tellraw @a {"text": "Placed Avatar: The Last Airbender terrain at offset (0, 0).", "color": "green"}
 function ac:_adv

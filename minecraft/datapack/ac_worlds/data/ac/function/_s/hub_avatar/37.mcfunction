@@ -1,4 +1,4 @@
-execute positioned ~509 ~ ~586 run function ac:raw/seven_havens/seven_havens_map
-forceload remove ~429 ~506 ~589 ~666
-tellraw @a {"text": "Placed Seven Havens Map at offset (509, 586).", "color": "green"}
+execute positioned ~950 ~ ~546 run function ac:raw/korra/future_industries
+forceload remove ~870 ~486 ~1030 ~606
+tellraw @a {"text": "Placed Future Industries at offset (950, 546).", "color": "green"}
 function ac:_adv

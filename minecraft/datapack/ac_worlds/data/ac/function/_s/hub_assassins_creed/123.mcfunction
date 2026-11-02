@@ -1,4 +1,4 @@
-execute positioned ~70 ~ ~2788 run function ac:raw/hexe/free_town
-forceload remove ~0 ~2728 ~140 ~2858
-tellraw @a {"text": "Placed Free Imperial Town at offset (70, 2788).", "color": "green"}
+execute positioned ~700 ~ ~2235 run function ac:raw/viking/asgard
+forceload remove ~620 ~2155 ~780 ~2315
+tellraw @a {"text": "Placed Asgard at offset (700, 2235).", "color": "green"}
 function ac:_adv

@@ -1,4 +1,7 @@
-execute positioned ~319 ~ ~3879 run function ac:raw/tech/flying_buttress
-forceload remove ~303 ~3873 ~335 ~3885
-tellraw @a {"text": "Placed Gothic engineering: pointed arch, rib vault, flying buttress at offset (319, 3879).", "color": "green"}
+execute positioned ~355 ~ ~4194 run function ac:raw/insomniac/edc_grounds
+forceload remove ~205 ~4044 ~460 ~4299
+forceload remove ~205 ~4300 ~460 ~4344
+forceload remove ~461 ~4044 ~505 ~4299
+forceload remove ~461 ~4300 ~505 ~4344
+tellraw @a {"text": "Placed EDC Las Vegas grounds at offset (355, 4194).", "color": "green"}
 function ac:_adv

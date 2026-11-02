@@ -1,4 +1,4 @@
-execute positioned ~90 ~ ~3230 run function ac:raw/korra/republic_city
-forceload remove ~0 ~3160 ~180 ~3320
-tellraw @a {"text": "Placed Republic City at offset (90, 3230).", "color": "green"}
+execute positioned ~535 ~ ~2597 run function ac:raw/japan/shrine
+forceload remove ~495 ~2557 ~575 ~2637
+tellraw @a {"text": "Placed Shinto Shrine at offset (535, 2597).", "color": "green"}
 function ac:_adv

@@ -1,4 +1,4 @@
-execute positioned ~215 ~ ~94 run function ac:raw/holy_land/jerusalem
-forceload remove ~145 ~24 ~285 ~164
-tellraw @a {"text": "Placed Jerusalem at offset (215, 94).", "color": "green"}
+execute positioned ~60 ~ ~84 run function ac:raw/holy_land/masyaf
+forceload remove ~0 ~24 ~120 ~154
+tellraw @a {"text": "Placed Masyaf at offset (60, 84).", "color": "green"}
 function ac:_adv

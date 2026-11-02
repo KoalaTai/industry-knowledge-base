@@ -1,4 +1,4 @@
-execute positioned ~319 ~ ~301 run function ac:raw/tech/flying_buttress
-forceload remove ~303 ~295 ~335 ~307
-tellraw @a {"text": "Placed Gothic engineering: pointed arch, rib vault, flying buttress at offset (319, 301).", "color": "green"}
+execute positioned ~85 ~ ~303 run function ac:raw/tech/trebuchet
+forceload remove ~61 ~295 ~97 ~311
+tellraw @a {"text": "Placed The counterweight trebuchet at offset (85, 303).", "color": "green"}
 function ac:_adv

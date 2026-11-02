@@ -1,4 +1,4 @@
-execute positioned ~200 ~ ~416 run function ac:raw/tech/chinampa
-forceload remove ~170 ~396 ~230 ~436
-tellraw @a {"text": "Placed Aztec chinampas at offset (200, 416).", "color": "green"}
+execute positioned ~370 ~ ~303 run function ac:raw/tech/printing_press
+forceload remove ~360 ~295 ~380 ~311
+tellraw @a {"text": "Placed Woodblock printing, movable type and the press at offset (370, 303).", "color": "green"}
 function ac:_adv

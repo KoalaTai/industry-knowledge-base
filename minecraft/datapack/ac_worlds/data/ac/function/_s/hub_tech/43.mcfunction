@@ -1,4 +1,4 @@
-execute positioned ~299 ~ ~230 run function ac:raw/tech/stepwell
-forceload remove ~279 ~210 ~319 ~254
-tellraw @a {"text": "Placed Stepwells (baori, vav) at offset (299, 230).", "color": "green"}
+execute positioned ~154 ~ ~218 run function ac:raw/tech/blast_furnace
+forceload remove ~142 ~210 ~168 ~228
+tellraw @a {"text": "Placed Chinese cast iron and the water-powered blast furnace at offset (154, 218).", "color": "green"}
 function ac:_adv

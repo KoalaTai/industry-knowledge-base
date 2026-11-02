@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for Vertical-axis windmill (panemone) ...", "color": "gray"}
-forceload add ~458 ~24 ~478 ~44
+tellraw @a {"text": "Loading chunks for Qanat ...", "color": "gray"}
+forceload add ~413 ~24 ~433 ~104
 function ac:_adv

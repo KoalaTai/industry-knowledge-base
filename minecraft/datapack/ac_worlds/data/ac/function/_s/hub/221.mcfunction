@@ -1,4 +1,4 @@
-execute positioned ~270 ~ ~3881 run function ac:raw/tech/clock_tower
-forceload remove ~262 ~3873 ~278 ~3889
-tellraw @a {"text": "Placed The mechanical clock and the verge escapement at offset (270, 3881).", "color": "green"}
+execute positioned ~90 ~ ~4114 run function ac:raw/insomniac/edc_stereobloom
+forceload remove ~0 ~4044 ~180 ~4214
+tellraw @a {"text": "Placed stereoBLOOM at offset (90, 4114).", "color": "green"}
 function ac:_adv

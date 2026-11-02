@@ -1,4 +1,7 @@
-execute positioned ~545 ~ ~1974 run function ac:raw/greece/trireme
-forceload remove ~515 ~1954 ~595 ~1994
-tellraw @a {"text": "Placed Athenian Trireme at offset (545, 1974).", "color": "green"}
+execute positioned ~90 ~ ~1717 run function ac:raw/egypt/giza
+forceload remove ~0 ~1607 ~255 ~1862
+forceload remove ~0 ~1863 ~255 ~1913
+forceload remove ~256 ~1607 ~317 ~1862
+forceload remove ~256 ~1863 ~317 ~1913
+tellraw @a {"text": "Placed Giza Plateau at offset (90, 1717).", "color": "green"}
 function ac:_adv

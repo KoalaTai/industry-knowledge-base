@@ -1,4 +1,4 @@
-execute positioned ~152 ~ ~307 run function ac:raw/tech/three_field
-forceload remove ~122 ~295 ~182 ~319
-tellraw @a {"text": "Placed The heavy plough, the horse collar and three-field rotation at offset (152, 307).", "color": "green"}
+execute positioned ~411 ~ ~220 run function ac:raw/tech/elephant_clock
+forceload remove ~401 ~210 ~422 ~230
+tellraw @a {"text": "Placed Al-Jazari's machines: crank, camshaft and the elephant clock at offset (411, 220).", "color": "green"}
 function ac:_adv

@@ -1,4 +1,4 @@
-execute positioned ~585 ~ ~375 run function ac:raw/korra/zaofu
-forceload remove ~495 ~285 ~675 ~465
-tellraw @a {"text": "Placed Zaofu at offset (585, 375).", "color": "green"}
+execute positioned ~90 ~ ~556 run function ac:raw/korra/republic_city
+forceload remove ~0 ~486 ~180 ~646
+tellraw @a {"text": "Placed Republic City at offset (90, 556).", "color": "green"}
 function ac:_adv

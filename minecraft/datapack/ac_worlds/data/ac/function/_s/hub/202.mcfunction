@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for The Grand Canal and the pound lock ...", "color": "gray"}
-forceload add ~193 ~3788 ~209 ~3832
+tellraw @a {"text": "Loading chunks for kineticFIELD ...", "color": "gray"}
+forceload add ~0 ~3803 ~221 ~4003
 function ac:_adv

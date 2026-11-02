@@ -1,0 +1,19 @@
+tellraw @a {"text": "Laying out Abbasid Baghdad ...", "color": "gray"}
+fill ~531 ~0 ~2346 ~710 ~0 ~2526 minecraft:sand
+fill ~351 ~0 ~2346 ~530 ~0 ~2526 minecraft:sand
+fill ~171 ~0 ~2346 ~350 ~0 ~2526 minecraft:sand
+fill ~-10 ~0 ~2346 ~170 ~0 ~2526 minecraft:sand
+fill ~168 ~1 ~2432 ~176 ~1 ~2440 minecraft:terracotta
+fill ~170 ~2 ~2434 ~174 ~2 ~2438 minecraft:sand
+fill ~171 ~3 ~2435 ~172 ~3 ~2436 minecraft:terracotta
+fill ~273 ~1 ~2432 ~281 ~1 ~2440 minecraft:terracotta
+fill ~275 ~2 ~2434 ~279 ~2 ~2438 minecraft:sand
+fill ~276 ~3 ~2435 ~277 ~3 ~2436 minecraft:terracotta
+fill ~418 ~1 ~2432 ~426 ~1 ~2440 minecraft:terracotta
+fill ~420 ~2 ~2434 ~424 ~2 ~2438 minecraft:sand
+fill ~421 ~3 ~2435 ~422 ~3 ~2436 minecraft:terracotta
+fill ~563 ~1 ~2432 ~571 ~1 ~2440 minecraft:terracotta
+fill ~565 ~2 ~2434 ~569 ~2 ~2438 minecraft:sand
+fill ~566 ~3 ~2435 ~567 ~3 ~2436 minecraft:terracotta
+fill ~-10 ~-2 ~2338 ~710 ~-2 ~2345 minecraft:sand
+fill ~-10 ~-1 ~2338 ~710 ~0 ~2345 minecraft:water

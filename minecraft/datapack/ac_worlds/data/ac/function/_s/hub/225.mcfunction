@@ -1,4 +1,4 @@
-execute positioned ~370 ~ ~3881 run function ac:raw/tech/printing_press
-forceload remove ~360 ~3873 ~380 ~3889
-tellraw @a {"text": "Placed Woodblock printing, movable type and the press at offset (370, 3881).", "color": "green"}
+execute positioned ~640 ~ ~4154 run function ac:raw/insomniac/nos_events_center
+forceload remove ~530 ~4044 ~750 ~4264
+tellraw @a {"text": "Placed NOS Events Center at offset (640, 4154).", "color": "green"}
 function ac:_adv

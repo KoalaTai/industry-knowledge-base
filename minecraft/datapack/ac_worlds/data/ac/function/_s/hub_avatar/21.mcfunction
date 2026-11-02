@@ -1,4 +1,4 @@
-execute positioned ~90 ~ ~355 run function ac:raw/korra/republic_city
-forceload remove ~0 ~285 ~180 ~445
-tellraw @a {"text": "Placed Republic City at offset (90, 355).", "color": "green"}
+execute positioned ~60 ~ ~325 run function ac:raw/atla/western_air_temple
+forceload remove ~0 ~285 ~120 ~385
+tellraw @a {"text": "Placed Western Air Temple at offset (60, 325).", "color": "green"}
 function ac:_adv

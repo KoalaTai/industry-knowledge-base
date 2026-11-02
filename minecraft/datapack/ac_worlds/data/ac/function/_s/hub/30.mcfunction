@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for New York ...", "color": "gray"}
-forceload add ~165 ~657 ~285 ~768
+tellraw @a {"text": "Loading chunks for Derinkuyu ...", "color": "gray"}
+forceload add ~365 ~456 ~445 ~536
 function ac:_adv

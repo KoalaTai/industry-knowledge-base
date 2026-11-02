@@ -1,4 +1,4 @@
-execute positioned ~119 ~ ~34 run function ac:raw/tech/shaduf
-forceload remove ~105 ~24 ~133 ~56
-tellraw @a {"text": "Placed Shaduf at offset (119, 34).", "color": "green"}
+execute positioned ~40 ~ ~54 run function ac:raw/tech/pyramid_ramp
+forceload remove ~0 ~24 ~80 ~104
+tellraw @a {"text": "Placed Pyramid construction: ramps, sledges and copper tools at offset (40, 54).", "color": "green"}
 function ac:_adv

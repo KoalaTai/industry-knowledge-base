@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for Noria and saqiya waterwheels ...", "color": "gray"}
-forceload add ~0 ~295 ~36 ~321
+tellraw @a {"text": "Loading chunks for Stepwells (baori, vav) ...", "color": "gray"}
+forceload add ~279 ~210 ~319 ~254
 function ac:_adv

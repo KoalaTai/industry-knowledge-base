@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for Wan Shi Tong's Library ...", "color": "gray"}
-forceload add ~1195 ~2899 ~1315 ~3019
+tellraw @a {"text": "Loading chunks for Azuchi Castle ...", "color": "gray"}
+forceload add ~0 ~2557 ~140 ~2687
 function ac:_adv

@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for Gothic engineering: pointed arch, rib vault, flying buttress ...", "color": "gray"}
-forceload add ~303 ~295 ~335 ~307
+tellraw @a {"text": "Loading chunks for The counterweight trebuchet ...", "color": "gray"}
+forceload add ~61 ~295 ~97 ~311
 function ac:_adv

@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for Iga Province ...", "color": "gray"}
-forceload add ~330 ~2557 ~470 ~2677
+tellraw @a {"text": "Loading chunks for Jorvik ...", "color": "gray"}
+forceload add ~350 ~2155 ~490 ~2275
 function ac:_adv

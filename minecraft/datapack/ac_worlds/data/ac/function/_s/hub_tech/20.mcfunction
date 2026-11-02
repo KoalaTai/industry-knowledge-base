@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for Hero of Alexandria: the aeolipile and automata ...", "color": "gray"}
-forceload add ~118 ~145 ~146 ~161
+tellraw @a {"text": "Loading chunks for Antikythera mechanism ...", "color": "gray"}
+forceload add ~0 ~145 ~40 ~161
 function ac:_adv

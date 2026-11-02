@@ -1,4 +1,4 @@
-execute positioned ~760 ~ ~3059 run function ac:raw/atla/ba_sing_se
-forceload remove ~700 ~2899 ~820 ~3119
-tellraw @a {"text": "Placed Ba Sing Se at offset (760, 3059).", "color": "green"}
+execute positioned ~495 ~ ~2416 run function ac:raw/baghdad/alamut
+forceload remove ~435 ~2356 ~555 ~2476
+tellraw @a {"text": "Placed Alamut at offset (495, 2416).", "color": "green"}
 function ac:_adv

@@ -1,4 +1,4 @@
-execute positioned ~700 ~ ~2034 run function ac:raw/greece/atlantis
-forceload remove ~620 ~1954 ~780 ~2114
-tellraw @a {"text": "Placed Atlantis at offset (700, 2034).", "color": "green"}
+execute positioned ~402 ~ ~1647 run function ac:raw/egypt/alexandria
+forceload remove ~342 ~1607 ~482 ~1737
+tellraw @a {"text": "Placed Alexandria: Pharos and Library at offset (402, 1647).", "color": "green"}
 function ac:_adv

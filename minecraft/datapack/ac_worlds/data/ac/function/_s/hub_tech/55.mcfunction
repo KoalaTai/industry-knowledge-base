@@ -1,4 +1,5 @@
-execute positioned ~222 ~ ~305 run function ac:raw/tech/post_mill
-forceload remove ~207 ~295 ~237 ~317
-tellraw @a {"text": "Placed The European post mill and tower mill at offset (222, 305).", "color": "green"}
+execute positioned ~ ~ ~ run function ac:terrain/hub_tech/tech_3
+forceload remove ~-10 ~285 ~245 ~365
+forceload remove ~246 ~285 ~487 ~365
+tellraw @a {"text": "Placed Premodern technology terrain at offset (0, 0).", "color": "green"}
 function ac:_adv

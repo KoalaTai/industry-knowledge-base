@@ -1,4 +1,4 @@
-execute positioned ~245 ~ ~104 run function ac:raw/atla/northern_water_tribe
-forceload remove ~165 ~24 ~325 ~174
-tellraw @a {"text": "Placed Northern Water Tribe at offset (245, 104).", "color": "green"}
+execute positioned ~70 ~ ~84 run function ac:raw/atla/southern_water_tribe
+forceload remove ~0 ~24 ~140 ~144
+tellraw @a {"text": "Placed Southern Water Tribe at offset (70, 84).", "color": "green"}
 function ac:_adv

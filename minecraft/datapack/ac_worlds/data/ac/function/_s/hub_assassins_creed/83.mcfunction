@@ -1,4 +1,4 @@
-execute positioned ~90 ~ ~2034 run function ac:raw/greece/athens
-forceload remove ~0 ~1954 ~180 ~2114
-tellraw @a {"text": "Placed Athens at offset (90, 2034).", "color": "green"}
+execute positioned ~615 ~ ~1476 run function ac:raw/london/thames_rail
+forceload remove ~535 ~1426 ~695 ~1536
+tellraw @a {"text": "Placed The Thames and the Railway at offset (615, 1476).", "color": "green"}
 function ac:_adv

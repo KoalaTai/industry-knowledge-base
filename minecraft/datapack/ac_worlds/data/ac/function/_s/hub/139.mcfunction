@@ -1,4 +1,6 @@
-execute positioned ~1080 ~ ~2989 run function ac:raw/atla/fire_nation_capital
-forceload remove ~990 ~2899 ~1170 ~3079
-tellraw @a {"text": "Placed Fire Nation Capital at offset (1080, 2989).", "color": "green"}
+execute positioned ~ ~ ~ run function ac:terrain/hub/japan
+forceload remove ~-10 ~2539 ~245 ~2697
+forceload remove ~246 ~2539 ~501 ~2697
+forceload remove ~502 ~2539 ~585 ~2697
+tellraw @a {"text": "Placed Sengoku Japan terrain at offset (0, 0).", "color": "green"}
 function ac:_adv

@@ -1,4 +1,4 @@
-execute positioned ~200 ~ ~3994 run function ac:raw/tech/chinampa
-forceload remove ~170 ~3974 ~230 ~4014
-tellraw @a {"text": "Placed Aztec chinampas at offset (200, 3994).", "color": "green"}
+execute positioned ~40 ~ ~4415 run function ac:raw/tech/pyramid_ramp
+forceload remove ~0 ~4385 ~80 ~4465
+tellraw @a {"text": "Placed Pyramid construction: ramps, sledges and copper tools at offset (40, 4415).", "color": "green"}
 function ac:_adv

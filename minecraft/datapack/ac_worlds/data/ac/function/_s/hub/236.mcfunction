@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for Great Zimbabwe and African ironworking ...", "color": "gray"}
-forceload add ~340 ~3974 ~420 ~4034
+tellraw @a {"text": "Loading chunks for Obelisk quarrying and raising ...", "color": "gray"}
+forceload add ~158 ~4385 ~238 ~4435
 function ac:_adv

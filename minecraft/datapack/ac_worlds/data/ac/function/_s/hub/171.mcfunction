@@ -1,4 +1,4 @@
-execute positioned ~293 ~ ~3632 run function ac:raw/tech/ziggurat
-forceload remove ~263 ~3602 ~323 ~3668
-tellraw @a {"text": "Placed Ziggurats and fired brick at offset (293, 3632).", "color": "green"}
+execute positioned ~1255 ~ ~2959 run function ac:raw/atla/wan_shi_tong_library
+forceload remove ~1195 ~2899 ~1315 ~3019
+tellraw @a {"text": "Placed Wan Shi Tong's Library at offset (1255, 2959).", "color": "green"}
 function ac:_adv

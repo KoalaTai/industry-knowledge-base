@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for The mechanical clock and the verge escapement ...", "color": "gray"}
-forceload add ~262 ~3873 ~278 ~3889
+tellraw @a {"text": "Loading chunks for stereoBLOOM ...", "color": "gray"}
+forceload add ~0 ~4044 ~180 ~4214
 function ac:_adv

@@ -1,0 +1,19 @@
+tellraw @a {"text": "Laying out The Caribbean ...", "color": "gray"}
+fill ~623 ~0 ~810 ~832 ~0 ~960 minecraft:sand
+fill ~412 ~0 ~810 ~622 ~0 ~960 minecraft:sand
+fill ~201 ~0 ~810 ~411 ~0 ~960 minecraft:sand
+fill ~-10 ~0 ~810 ~200 ~0 ~960 minecraft:sand
+fill ~170 ~1 ~881 ~178 ~1 ~889 minecraft:grass_block
+fill ~172 ~2 ~883 ~176 ~2 ~887 minecraft:sand
+fill ~173 ~3 ~884 ~174 ~3 ~885 minecraft:grass_block
+fill ~335 ~1 ~881 ~343 ~1 ~889 minecraft:grass_block
+fill ~337 ~2 ~883 ~341 ~2 ~887 minecraft:sand
+fill ~338 ~3 ~884 ~339 ~3 ~885 minecraft:grass_block
+fill ~500 ~1 ~881 ~508 ~1 ~889 minecraft:grass_block
+fill ~502 ~2 ~883 ~506 ~2 ~887 minecraft:sand
+fill ~503 ~3 ~884 ~504 ~3 ~885 minecraft:grass_block
+fill ~645 ~1 ~881 ~653 ~1 ~889 minecraft:grass_block
+fill ~647 ~2 ~883 ~651 ~2 ~887 minecraft:sand
+fill ~648 ~3 ~884 ~649 ~3 ~885 minecraft:grass_block
+fill ~-10 ~-2 ~802 ~832 ~-2 ~809 minecraft:sand
+fill ~-10 ~-1 ~802 ~832 ~0 ~809 minecraft:water

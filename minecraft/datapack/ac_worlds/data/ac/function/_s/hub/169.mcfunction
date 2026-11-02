@@ -1,4 +1,4 @@
-execute positioned ~188 ~ ~3622 run function ac:raw/tech/obelisk_quarry
-forceload remove ~158 ~3602 ~238 ~3652
-tellraw @a {"text": "Placed Obelisk quarrying and raising at offset (188, 3622).", "color": "green"}
+execute positioned ~1080 ~ ~2989 run function ac:raw/atla/fire_nation_capital
+forceload remove ~990 ~2899 ~1170 ~3079
+tellraw @a {"text": "Placed Fire Nation Capital at offset (1080, 2989).", "color": "green"}
 function ac:_adv

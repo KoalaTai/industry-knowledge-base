@@ -1,0 +1,23 @@
+tellraw @a {"text": "Laying out Classical Greece ...", "color": "gray"}
+fill ~691 ~0 ~1944 ~790 ~0 ~2124 minecraft:grass_block
+fill ~591 ~0 ~1944 ~690 ~0 ~2124 minecraft:grass_block
+fill ~491 ~0 ~1944 ~590 ~0 ~2124 minecraft:grass_block
+fill ~391 ~0 ~1944 ~490 ~0 ~2124 minecraft:grass_block
+fill ~291 ~0 ~1944 ~390 ~0 ~2124 minecraft:grass_block
+fill ~191 ~0 ~1944 ~290 ~0 ~2124 minecraft:grass_block
+fill ~91 ~0 ~1944 ~190 ~0 ~2124 minecraft:grass_block
+fill ~-10 ~0 ~1944 ~90 ~0 ~2124 minecraft:grass_block
+fill ~188 ~1 ~2030 ~196 ~1 ~2038 minecraft:stone
+fill ~190 ~2 ~2032 ~194 ~2 ~2036 minecraft:grass_block
+fill ~191 ~3 ~2033 ~192 ~3 ~2034 minecraft:stone
+fill ~353 ~1 ~2030 ~361 ~1 ~2038 minecraft:stone
+fill ~355 ~2 ~2032 ~359 ~2 ~2036 minecraft:grass_block
+fill ~356 ~3 ~2033 ~357 ~3 ~2034 minecraft:stone
+fill ~498 ~1 ~2030 ~506 ~1 ~2038 minecraft:stone
+fill ~500 ~2 ~2032 ~504 ~2 ~2036 minecraft:grass_block
+fill ~501 ~3 ~2033 ~502 ~3 ~2034 minecraft:stone
+fill ~603 ~1 ~2030 ~611 ~1 ~2038 minecraft:stone
+fill ~605 ~2 ~2032 ~609 ~2 ~2036 minecraft:grass_block
+fill ~606 ~3 ~2033 ~607 ~3 ~2034 minecraft:stone
+fill ~-10 ~-2 ~1936 ~790 ~-2 ~1943 minecraft:sand
+fill ~-10 ~-1 ~1936 ~790 ~0 ~1943 minecraft:water

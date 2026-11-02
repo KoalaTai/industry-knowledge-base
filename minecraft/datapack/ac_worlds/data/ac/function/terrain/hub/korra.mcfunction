@@ -1,0 +1,26 @@
+tellraw @a {"text": "Laying out The Legend of Korra ...", "color": "gray"}
+fill ~910 ~0 ~3351 ~1040 ~0 ~3551 minecraft:grass_block
+fill ~779 ~0 ~3351 ~909 ~0 ~3551 minecraft:grass_block
+fill ~648 ~0 ~3351 ~778 ~0 ~3551 minecraft:grass_block
+fill ~516 ~0 ~3351 ~647 ~0 ~3551 minecraft:grass_block
+fill ~385 ~0 ~3351 ~515 ~0 ~3551 minecraft:grass_block
+fill ~253 ~0 ~3351 ~384 ~0 ~3551 minecraft:grass_block
+fill ~122 ~0 ~3351 ~252 ~0 ~3551 minecraft:grass_block
+fill ~-10 ~0 ~3351 ~121 ~0 ~3551 minecraft:grass_block
+fill ~188 ~1 ~3447 ~196 ~1 ~3455 minecraft:stone
+fill ~190 ~2 ~3449 ~194 ~2 ~3453 minecraft:grass_block
+fill ~191 ~3 ~3450 ~192 ~3 ~3451 minecraft:stone
+fill ~333 ~1 ~3447 ~341 ~1 ~3455 minecraft:stone
+fill ~335 ~2 ~3449 ~339 ~2 ~3453 minecraft:grass_block
+fill ~336 ~3 ~3450 ~337 ~3 ~3451 minecraft:stone
+fill ~478 ~1 ~3447 ~486 ~1 ~3455 minecraft:stone
+fill ~480 ~2 ~3449 ~484 ~2 ~3453 minecraft:grass_block
+fill ~481 ~3 ~3450 ~482 ~3 ~3451 minecraft:stone
+fill ~683 ~1 ~3447 ~691 ~1 ~3455 minecraft:stone
+fill ~685 ~2 ~3449 ~689 ~2 ~3453 minecraft:grass_block
+fill ~686 ~3 ~3450 ~687 ~3 ~3451 minecraft:stone
+fill ~853 ~1 ~3447 ~861 ~1 ~3455 minecraft:stone
+fill ~855 ~2 ~3449 ~859 ~2 ~3453 minecraft:grass_block
+fill ~856 ~3 ~3450 ~857 ~3 ~3451 minecraft:stone
+fill ~-10 ~-2 ~3343 ~1040 ~-2 ~3350 minecraft:sand
+fill ~-10 ~-1 ~3343 ~1040 ~0 ~3350 minecraft:water

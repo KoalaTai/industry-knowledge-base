@@ -1,4 +1,4 @@
-execute positioned ~100 ~ ~1272 run function ac:raw/chronicles/great_wall
-forceload remove ~0 ~1232 ~200 ~1312
-tellraw @a {"text": "Placed The Great Wall at offset (100, 1272).", "color": "green"}
+execute positioned ~742 ~ ~880 run function ac:raw/caribbean/new_orleans
+forceload remove ~662 ~820 ~822 ~940
+tellraw @a {"text": "Placed New Orleans at offset (742, 880).", "color": "green"}
 function ac:_adv

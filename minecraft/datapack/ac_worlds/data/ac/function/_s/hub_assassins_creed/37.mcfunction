@@ -1,4 +1,4 @@
-execute positioned ~82 ~ ~880 run function ac:raw/caribbean/havana
-forceload remove ~0 ~820 ~162 ~950
-tellraw @a {"text": "Placed Havana at offset (82, 880).", "color": "green"}
+execute positioned ~70 ~ ~717 run function ac:raw/colonial_america/boston
+forceload remove ~0 ~657 ~140 ~777
+tellraw @a {"text": "Placed Boston at offset (70, 717).", "color": "green"}
 function ac:_adv

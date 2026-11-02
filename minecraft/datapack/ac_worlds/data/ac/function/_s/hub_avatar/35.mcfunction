@@ -1,4 +1,4 @@
-execute positioned ~295 ~ ~596 run function ac:raw/seven_havens/wastes
-forceload remove ~205 ~506 ~404 ~686
-tellraw @a {"text": "Placed The Wastes at offset (295, 596).", "color": "green"}
+execute positioned ~773 ~ ~556 run function ac:raw/korra/spirit_wilds
+forceload remove ~700 ~486 ~845 ~626
+tellraw @a {"text": "Placed Spirit Wilds at offset (773, 556).", "color": "green"}
 function ac:_adv

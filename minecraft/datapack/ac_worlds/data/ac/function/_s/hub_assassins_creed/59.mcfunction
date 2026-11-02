@@ -1,4 +1,4 @@
-execute positioned ~450 ~ ~1292 run function ac:raw/chronicles/petrograd
-forceload remove ~370 ~1232 ~530 ~1352
-tellraw @a {"text": "Placed Petrograd at offset (450, 1292).", "color": "green"}
+execute positioned ~60 ~ ~1031 run function ac:raw/paris/notre_dame
+forceload remove ~0 ~991 ~120 ~1141
+tellraw @a {"text": "Placed Notre-Dame at offset (60, 1031).", "color": "green"}
 function ac:_adv

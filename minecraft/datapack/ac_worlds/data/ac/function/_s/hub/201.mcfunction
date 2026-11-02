@@ -1,4 +1,10 @@
-execute positioned ~154 ~ ~3796 run function ac:raw/tech/blast_furnace
-forceload remove ~142 ~3788 ~168 ~3806
-tellraw @a {"text": "Placed Chinese cast iron and the water-powered blast furnace at offset (154, 3796).", "color": "green"}
+execute positioned ~ ~ ~ run function ac:terrain/hub/insomniac
+forceload remove ~-10 ~3793 ~245 ~4013
+forceload remove ~246 ~3793 ~501 ~4013
+forceload remove ~502 ~3793 ~757 ~4013
+forceload remove ~758 ~3793 ~1013 ~4013
+forceload remove ~1014 ~3793 ~1269 ~4013
+forceload remove ~1270 ~3793 ~1525 ~4013
+forceload remove ~1526 ~3793 ~1736 ~4013
+tellraw @a {"text": "Placed Insomniac Events terrain at offset (0, 0).", "color": "green"}
 function ac:_adv

@@ -1,0 +1,19 @@
+tellraw @a {"text": "Laying out Ottoman Constantinople ...", "color": "gray"}
+fill ~420 ~0 ~446 ~562 ~0 ~626 minecraft:grass_block
+fill ~277 ~0 ~446 ~419 ~0 ~626 minecraft:grass_block
+fill ~134 ~0 ~446 ~276 ~0 ~626 minecraft:grass_block
+fill ~-10 ~0 ~446 ~133 ~0 ~626 minecraft:grass_block
+fill ~128 ~1 ~532 ~136 ~1 ~540 minecraft:stone
+fill ~130 ~2 ~534 ~134 ~2 ~538 minecraft:grass_block
+fill ~131 ~3 ~535 ~132 ~3 ~536 minecraft:stone
+fill ~253 ~1 ~532 ~261 ~1 ~540 minecraft:stone
+fill ~255 ~2 ~534 ~259 ~2 ~538 minecraft:grass_block
+fill ~256 ~3 ~535 ~257 ~3 ~536 minecraft:stone
+fill ~348 ~1 ~532 ~356 ~1 ~540 minecraft:stone
+fill ~350 ~2 ~534 ~354 ~2 ~538 minecraft:grass_block
+fill ~351 ~3 ~535 ~352 ~3 ~536 minecraft:stone
+fill ~453 ~1 ~532 ~461 ~1 ~540 minecraft:stone
+fill ~455 ~2 ~534 ~459 ~2 ~538 minecraft:grass_block
+fill ~456 ~3 ~535 ~457 ~3 ~536 minecraft:stone
+fill ~-10 ~-2 ~438 ~562 ~-2 ~445 minecraft:sand
+fill ~-10 ~-1 ~438 ~562 ~0 ~445 minecraft:water

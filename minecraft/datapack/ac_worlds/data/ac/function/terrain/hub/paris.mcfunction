@@ -1,0 +1,20 @@
+tellraw @a {"text": "Laying out Revolutionary Paris ...", "color": "gray"}
+fill ~512 ~0 ~1092 ~685 ~0 ~1201 minecraft:grass_block
+fill ~512 ~0 ~981 ~685 ~0 ~1091 minecraft:grass_block
+fill ~338 ~0 ~1092 ~511 ~0 ~1201 minecraft:grass_block
+fill ~338 ~0 ~981 ~511 ~0 ~1091 minecraft:grass_block
+fill ~164 ~0 ~1092 ~337 ~0 ~1201 minecraft:grass_block
+fill ~164 ~0 ~981 ~337 ~0 ~1091 minecraft:grass_block
+fill ~-10 ~0 ~1092 ~163 ~0 ~1201 minecraft:grass_block
+fill ~-10 ~0 ~981 ~163 ~0 ~1091 minecraft:grass_block
+fill ~128 ~1 ~1087 ~136 ~1 ~1095 minecraft:stone
+fill ~130 ~2 ~1089 ~134 ~2 ~1093 minecraft:grass_block
+fill ~131 ~3 ~1090 ~132 ~3 ~1091 minecraft:stone
+fill ~273 ~1 ~1087 ~281 ~1 ~1095 minecraft:stone
+fill ~275 ~2 ~1089 ~279 ~2 ~1093 minecraft:grass_block
+fill ~276 ~3 ~1090 ~277 ~3 ~1091 minecraft:stone
+fill ~538 ~1 ~1087 ~546 ~1 ~1095 minecraft:stone
+fill ~540 ~2 ~1089 ~544 ~2 ~1093 minecraft:grass_block
+fill ~541 ~3 ~1090 ~542 ~3 ~1091 minecraft:stone
+fill ~-10 ~-2 ~973 ~685 ~-2 ~980 minecraft:sand
+fill ~-10 ~-1 ~973 ~685 ~0 ~980 minecraft:water

@@ -1,4 +1,4 @@
-execute positioned ~780 ~ ~1486 run function ac:raw/london/london_streets
-forceload remove ~720 ~1426 ~840 ~1546
-tellraw @a {"text": "Placed East End Streets at offset (780, 1486).", "color": "green"}
+execute positioned ~100 ~ ~1272 run function ac:raw/chronicles/great_wall
+forceload remove ~0 ~1232 ~200 ~1312
+tellraw @a {"text": "Placed The Great Wall at offset (100, 1272).", "color": "green"}
 function ac:_adv

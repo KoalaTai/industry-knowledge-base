@@ -1,3 +1,3 @@
-tellraw @a {"text": "Loading chunks for Mesoamerican pyramids and Maya astronomy ...", "color": "gray"}
-forceload add ~255 ~3974 ~315 ~4034
+tellraw @a {"text": "Loading chunks for Shaduf ...", "color": "gray"}
+forceload add ~105 ~4385 ~133 ~4417
 function ac:_adv
