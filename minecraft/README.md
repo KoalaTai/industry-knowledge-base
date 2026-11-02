@@ -11,7 +11,20 @@ can change any building and regenerate.
 
 ## Install (you have Minecraft open: this takes two minutes)
 
-**Option A: a fresh world that builds itself**
+**Fastest: the installer.** Make a world first if you don't have one
+(Create New World > Creative > World Type Superflat), then from the repo folder:
+
+```
+python minecraft/install.py
+```
+
+It finds your `.minecraft` folder, lists your worlds, copies the pack into the
+one you pick, and prints the three commands to type. Open the world (or `/reload`)
+and it builds itself fifteen seconds after you join. Nothing to install
+beyond Python 3, which macOS and most Linux have; on Windows get it from
+python.org if `python` is not recognised.
+
+**Option A: a fresh world that builds itself (by hand)**
 
 1. Download or clone this repository; the pack is the folder
    `minecraft/datapack/ac_worlds` (or the zip `minecraft/datapack/ac_worlds.zip`).
