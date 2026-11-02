@@ -2141,7 +2141,8 @@ setblock ~-7 ~16 ~66 minecraft:stone_bricks
 setblock ~-1 ~16 ~66 minecraft:stone_bricks
 setblock ~1 ~16 ~66 minecraft:stone_bricks
 setblock ~7 ~16 ~66 minecraft:stone_bricks
-fill ~-5 ~16 ~67 ~-4 ~16 ~67 minecraft:stone_bricks
+setblock ~-6 ~16 ~67 minecraft:stone_bricks
+setblock ~-4 ~16 ~67 minecraft:stone_bricks
 setblock ~-2 ~16 ~67 minecraft:stone_bricks
 fill ~3 ~16 ~67 ~4 ~16 ~67 minecraft:stone_bricks
 setblock ~6 ~16 ~67 minecraft:stone_bricks

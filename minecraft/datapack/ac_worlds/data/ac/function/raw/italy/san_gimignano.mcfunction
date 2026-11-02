@@ -952,7 +952,8 @@ setblock ~-7 ~13 ~48 minecraft:smooth_sandstone
 setblock ~-1 ~13 ~48 minecraft:smooth_sandstone
 setblock ~1 ~13 ~48 minecraft:smooth_sandstone
 setblock ~7 ~13 ~48 minecraft:smooth_sandstone
-fill ~-5 ~13 ~49 ~-4 ~13 ~49 minecraft:smooth_sandstone
+setblock ~-6 ~13 ~49 minecraft:smooth_sandstone
+setblock ~-4 ~13 ~49 minecraft:smooth_sandstone
 setblock ~-2 ~13 ~49 minecraft:smooth_sandstone
 fill ~3 ~13 ~49 ~4 ~13 ~49 minecraft:smooth_sandstone
 setblock ~6 ~13 ~49 minecraft:smooth_sandstone

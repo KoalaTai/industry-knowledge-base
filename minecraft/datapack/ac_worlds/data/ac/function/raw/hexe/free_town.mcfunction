@@ -2070,7 +2070,8 @@ setblock ~-7 ~13 ~42 minecraft:cobblestone
 setblock ~-1 ~13 ~42 minecraft:cobblestone
 setblock ~1 ~13 ~42 minecraft:cobblestone
 setblock ~7 ~13 ~42 minecraft:cobblestone
-fill ~-5 ~13 ~43 ~-4 ~13 ~43 minecraft:cobblestone
+setblock ~-6 ~13 ~43 minecraft:cobblestone
+setblock ~-4 ~13 ~43 minecraft:cobblestone
 setblock ~-2 ~13 ~43 minecraft:cobblestone
 fill ~3 ~13 ~43 ~4 ~13 ~43 minecraft:cobblestone
 setblock ~6 ~13 ~43 minecraft:cobblestone

@@ -239,7 +239,12 @@ def main() -> None:
         f"scoreboard objectives add {NS}_step dummy",
         f"scoreboard objectives add {NS}_flag dummy",
         f"execute unless score #auto {NS}_flag = #auto {NS}_flag run scoreboard players set #auto {NS}_flag 1",
-        "gamerule maxCommandChainLength 1000000",
+        # No gamerule line here on purpose. Minecraft 26.x renamed
+        # maxCommandChainLength to max_command_sequence_length, and a function
+        # containing an unknown gamerule fails to parse as a whole, so ac:load
+        # never ran, the ac_step objective was never created and every
+        # sequence looped on step 0 forever. Builds stay under the default
+        # 65536 chain limit (tests enforce < 60000), so no override is needed.
         say("AC Worlds datapack loaded. /function ac:index lists every build; /function ac:hub builds everything.", "gold"),
     ])
     pack.add("tick", [

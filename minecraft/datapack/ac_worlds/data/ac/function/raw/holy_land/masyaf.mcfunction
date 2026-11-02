@@ -1170,7 +1170,8 @@ setblock ~-7 ~30 ~12 minecraft:stone_bricks
 setblock ~-1 ~30 ~12 minecraft:stone_bricks
 setblock ~1 ~30 ~12 minecraft:stone_bricks
 setblock ~7 ~30 ~12 minecraft:stone_bricks
-fill ~-5 ~30 ~13 ~-4 ~30 ~13 minecraft:stone_bricks
+setblock ~-6 ~30 ~13 minecraft:stone_bricks
+setblock ~-4 ~30 ~13 minecraft:stone_bricks
 setblock ~-2 ~30 ~13 minecraft:stone_bricks
 fill ~3 ~30 ~13 ~4 ~30 ~13 minecraft:stone_bricks
 setblock ~6 ~30 ~13 minecraft:stone_bricks
