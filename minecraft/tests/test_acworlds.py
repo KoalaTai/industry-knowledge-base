@@ -87,10 +87,16 @@ class MeshTests(unittest.TestCase):
 
 class TemplateTests(unittest.TestCase):
     def test_nbt_round_trip(self):
-        nbt = {"DataVersion": 5023, "size": [1, 2, 3], "palette": [{"Name": "minecraft:stone"},
-               {"Name": "minecraft:oak_leaves", "Properties": {"persistent": "true"}}],
+        nbt = {"DataVersion": 5023, "size": [1, 2, 3], "palette": [{"id": "minecraft:stone"},
+               {"id": "minecraft:oak_leaves", "properties": {"persistent": "true"}}],
                "blocks": [{"pos": [0, 1, 2], "state": 1}], "entities": []}
         self.assertEqual(loads(dumps(nbt)), nbt)
+
+    def test_templates_use_the_26x_palette_keys(self):
+        # 26.3 reads palette entries as {id, properties}; the old {Name, Properties} silently becomes air
+        t = template_nbt({(0, 0, 0): "minecraft:stone", (1, 0, 0): "minecraft:oak_leaves[persistent=true]"}, (0, 0, 0))
+        self.assertEqual(t["palette"], [{"id": "minecraft:stone"}, {"id": "minecraft:oak_leaves", "properties": {"persistent": "true"}}])
+        self.assertEqual(t["DataVersion"], 5023)
 
     def test_parse_state(self):
         self.assertEqual(parse_state("minecraft:stone"), ("minecraft:stone", {}))

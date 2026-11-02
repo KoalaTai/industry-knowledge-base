@@ -2,8 +2,13 @@
 
 A structure template is a gzipped NBT compound::
 
-    {DataVersion: int, size: [sx, sy, sz], palette: [{Name, Properties}],
+    {DataVersion: int, size: [sx, sy, sz], palette: [{id, properties}],
      blocks: [{pos: [x, y, z], state: int}], entities: []}
+
+Palette keys are the 26.x spelling (``id`` / ``properties``, DataVersion
+5023).  Up to 1.21.x the keys were ``Name`` / ``Properties``; a 26.3 game
+reads those as missing and silently places air for every entry, which is
+how this was found.  Use ``--placement commands`` for pre-26 versions.
 
 Minecraft caps templates at 48 blocks per axis, so a build is tiled into
 <= 48x48x48 cubes and each tile is placed with one ``/place template``
@@ -161,9 +166,9 @@ def template_nbt(blocks: Dict[Coord, str], origin: Coord) -> dict:
     for (x, y, z), b in sorted(blocks.items(), key=lambda kv: (kv[0][1], kv[0][2], kv[0][0])):
         if b not in index:
             name, props = parse_state(b)
-            entry = {"Name": name}
+            entry = {"id": name}
             if props:
-                entry["Properties"] = props
+                entry["properties"] = props
             index[b] = len(palette)
             palette.append(entry)
         entries.append({"pos": [x - ox, y - oy, z - oz], "state": index[b]})
@@ -181,8 +186,9 @@ def blocks_from_template(nbt: dict, origin: Coord) -> Dict[Coord, str]:
     ox, oy, oz = origin
     pal = []
     for e in nbt["palette"]:
-        props = e.get("Properties", {})
-        pal.append(e["Name"] + ("[" + ",".join(f"{k}={v}" for k, v in props.items()) + "]" if props else ""))
+        props = e.get("properties", e.get("Properties", {}))          # accept both spellings when reading
+        name = e.get("id", e.get("Name"))
+        pal.append(name + ("[" + ",".join(f"{k}={v}" for k, v in props.items()) + "]" if props else ""))
     return {(p["pos"][0] + ox, p["pos"][1] + oy, p["pos"][2] + oz): pal[p["state"]] for p in nbt["blocks"]}
 
 
