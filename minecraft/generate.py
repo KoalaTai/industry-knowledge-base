@@ -38,6 +38,7 @@ sys.path.insert(0, HERE)
 
 from acworlds import Voxel, all_worlds  # noqa: E402
 from acworlds.export import Datapack, tellraw, to_commands  # noqa: E402
+from acworlds.structure import build_plan  # noqa: E402
 from acworlds.technology import MODELS, TECH_BUILD_NOTES  # noqa: E402
 
 NS = "ac"
@@ -76,14 +77,40 @@ class Item:
         self.bounds = bounds          # x1 y1 z1 x2 y2 z2 relative to its own origin
 
 
-def add_sequence(pack: Datapack, seq: str, items: List[Tuple[Item, int, int]], title: str) -> None:
-    """Create ac:<seq> (entry) and ac:_s/<seq>/<n> (steps) for a list of (item, dx, dz)."""
-    pack.add(seq, [
+def placement(pack: Datapack, v: Voxel, key: str, mode: str) -> List[str]:
+    """Commands that place ``v`` relative to the executor.
+
+    ``templates`` (default): large boxes stay ``/fill``; everything else is
+    tiled into <= 48^3 structure templates registered on ``pack`` under
+    ``<key>/<tile>`` and placed with ``/place template``.  ``commands``: the
+    original pure ``/fill`` + ``/setblock`` list (1.21.0-compatible, ~40x
+    more commands).
+    """
+    if mode == "commands":
+        return to_commands(v)
+    plan = build_plan(v)
+    for t in plan.templates:
+        pack.add_structure(f"{key}/{t.name}", t.nbt)
+    return plan.commands(f"{NS}:{key}")
+
+
+def add_sequence(pack: Datapack, seq: str, items: List[Tuple[Item, int, int]], title: str,
+                 remember: bool = False) -> None:
+    """Create ac:<seq> (entry) and ac:_s/<seq>/<n> (steps) for a list of (item, dx, dz).
+
+    ``remember`` also copies the origin to storage ``ac:hub`` so ac:overview and
+    ac:goto/<world> can find the hub later, whatever else has run since.
+    """
+    entry = [
         f"execute store result storage {NS}:seq x int 1 run data get entity @s Pos[0]",
         f"execute store result storage {NS}:seq y int 1 run data get entity @s Pos[1]",
         f"execute store result storage {NS}:seq z int 1 run data get entity @s Pos[2]",
         f"data modify storage {NS}:seq seq set value \"{seq.replace('/', '.')}\"",
         f"data modify storage {NS}:seq step set value 0",
+    ]
+    if remember:
+        entry += [f"data modify storage {NS}:hub {k} set from storage {NS}:seq {k}" for k in "xyz"]
+    pack.add(seq, entry + [
         say(f"{title}: {len(items)} build(s) queued. Chunks are force-loaded two seconds before each placement.", "aqua"),
         f"function {NS}:_next",
     ])
@@ -104,6 +131,57 @@ def add_sequence(pack: Datapack, seq: str, items: List[Tuple[Item, int, int]], t
         ])
         n += 1
     pack.add(f"_s/{sname}/{n}", [say(f"{title}: done.", "gold", bold=True)])
+
+
+def add_travel(pack: Datapack, hub_layout: List[Tuple[Item, int, int]], worlds, index_lines: List[str]) -> None:
+    """ac:fly, ac:spirit, ac:overview and ac:goto/<world>: get around the hub.
+
+    The hub is thousands of blocks across, far beyond render distance, so
+    "seeing it all" means ghosting between rows.  Positions come from storage
+    ``ac:hub`` (written when ac:hub starts), read through macro functions.
+    """
+    def me(text: str, color: str = "light_purple", bold: bool = False) -> str:
+        return say(text, color, bold).replace("tellraw @a", "tellraw @s", 1)
+
+    no_hub = (f"execute unless data storage {NS}:hub x run "
+              + me("No hub built yet: run /function ac:hub first (ac:index for single builds).", "red"))
+    pack.add("fly", [
+        "gamemode creative @s",
+        me("Creative: double-tap jump to fly, hold shift to descend. /function ac:spirit for ghost mode.", "aqua"),
+    ])
+    pack.add("spirit", [
+        "gamemode spectator @s",
+        "effect give @s minecraft:night_vision infinite 0 true",
+        me("Spirit mode: you are a ghost. Fly through anything, scroll to change speed, see in the dark.", "light_purple", True),
+        me("/function ac:overview floats you above the hub; /function ac:goto/<world> jumps to a row; /function ac:fly to come back.", "gray"),
+    ])
+    # hub extents (relative to the hub origin) for the overview
+    xs = [dx + it.bounds[0] for it, dx, _ in hub_layout] + [dx + it.bounds[3] for it, dx, _ in hub_layout]
+    zs = [dz + it.bounds[2] for it, _, dz in hub_layout] + [dz + it.bounds[5] for it, _, dz in hub_layout]
+    cx, cz = (min(xs) + max(xs)) // 2, (min(zs) + max(zs)) // 2
+    pack.add("overview", [no_hub, f"execute if data storage {NS}:hub x run function {NS}:_overview with storage {NS}:hub"])
+    pack.add("_overview", [
+        "gamemode spectator @s",
+        f"$execute positioned $(x) $(y) $(z) run tp @s ~{cx} ~220 ~{cz} 0 90",
+        me(f"Above the hub centre, looking down. The hub spans {max(xs) - min(xs) + 1} x {max(zs) - min(zs) + 1} blocks; "
+           "raise render distance (Options > Video) or use /function ac:goto/<world> to visit rows.", "light_purple"),
+    ])
+    # first placement of every world row (and the tech rows) -> ac:goto/<world>
+    first: Dict[str, Tuple[Item, int, int]] = {}
+    for it, dx, dz in hub_layout:
+        wid = it.seq_id.split("_", 1)[0] if it.raw_fn.startswith("raw/tech/") else it.raw_fn.split("/")[1]
+        first.setdefault(wid, (it, dx, dz))
+    names = {w.id: w.name for w in worlds}
+    names["tech"] = "Premodern technology"
+    index_lines.append(say("Travel (after ac:hub): /function ac:fly, ac:spirit, ac:overview, ac:goto/<world>", "yellow", True))
+    for wid, (it, dx, dz) in first.items():
+        tx, tz = dx + it.bounds[0] - 6, dz + it.bounds[2] - 6     # just outside the row's first build
+        pack.add(f"goto/{wid}", [no_hub, f"execute if data storage {NS}:hub x run function {NS}:_goto/{wid} with storage {NS}:hub"])
+        pack.add(f"_goto/{wid}", [
+            f"$execute positioned $(x) $(y) $(z) run tp @s ~{tx} ~1 ~{tz} -45 10",
+            me(f"{names.get(wid, wid)}: the row starts ahead of you (south-east). First build: {it.name}.", "aqua"),
+        ])
+        index_lines.append(say(f"  /function {NS}:goto/{wid}  -  {names.get(wid, wid)}", "white"))
 
 
 def layout_rows(rows: List[List[Item]], z_start: int = 24) -> List[Tuple[Item, int, int]]:
@@ -127,6 +205,9 @@ def layout_rows(rows: List[List[Item]], z_start: int = 24) -> List[Tuple[Item, i
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=os.path.join(HERE, "datapack", "ac_worlds"))
+    ap.add_argument("--placement", choices=("templates", "commands"), default="templates",
+                    help="templates (default): structure templates + a few big /fill; "
+                         "commands: pure /fill + /setblock as before")
     args = ap.parse_args()
 
     with open(os.path.join(HERE, "knowledge", "premodern_technology.json"), encoding="utf-8") as f:
@@ -149,7 +230,7 @@ def main() -> None:
         for b in w.builds:
             v = Voxel()
             b.builder(v)
-            cmds = to_commands(v)
+            cmds = placement(pack, v, f"{w.id}/{b.id}", args.placement)
             size = v.size()
             total_cmds += len(cmds)
             raw = f"raw/{w.id}/{b.id}"
@@ -173,7 +254,7 @@ def main() -> None:
     for mid, fn in MODELS.items():
         v = Voxel()
         fn(v)
-        cmds = to_commands(v)
+        cmds = placement(pack, v, f"tech/{mid}", args.placement)
         total_cmds += len(cmds)
         rec = by_model.get(mid)
         head = [say(f"Technology: {rec['name'] if rec else mid}", "gold", True),
@@ -221,7 +302,9 @@ def main() -> None:
     ac_rows = [world_items[w.id] for w in worlds if w.franchise == "Assassin's Creed"]
     av_rows = [world_items[w.id] for w in worlds if w.franchise == "Avatar"]
     tech_rows = [tech_items[i:i + 8] for i in range(0, len(tech_items), 8)]
-    add_sequence(pack, "hub", layout_rows(ac_rows + av_rows + tech_rows), "Everything")
+    hub_layout = layout_rows(ac_rows + av_rows + tech_rows)
+    add_sequence(pack, "hub", hub_layout, "Everything", remember=True)
+    add_travel(pack, hub_layout, worlds, index_lines)
     add_sequence(pack, "hub_assassins_creed", layout_rows(ac_rows), "Assassin's Creed worlds")
     add_sequence(pack, "hub_avatar", layout_rows(av_rows), "Avatar worlds")
     add_sequence(pack, "hub_tech", layout_rows(tech_rows), "Premodern technology")
@@ -275,6 +358,8 @@ def main() -> None:
         say("/function ac:<world>/<build> - build one landmark where you stand (e.g. ac:egypt/giza)", "white"),
         say("/function ac:<world>/all - a whole world in a row; ac:hub - everything", "white"),
         say("/function ac:cancel - stop a running sequence; ac:reset_auto - re-arm the first-join auto-build", "white"),
+        say("/function ac:fly - creative flight; ac:spirit - spectator ghost mode with night vision", "white"),
+        say("/function ac:overview - float above the hub; ac:goto/<world> - jump to that world's row", "white"),
         say("Builds place relative to your feet: stand on flat ground, face north (-z) for the 'front'.", "gray"),
     ])
     # the tick tag
@@ -288,6 +373,8 @@ def main() -> None:
     with open(os.path.join(HERE, "datapack", "INDEX.md"), "w", encoding="utf-8") as f:
         f.write("# AC Worlds datapack - function index\n\n")
         f.write("Generated by `python generate.py`. Run any function as a player: `/function <name>`.\n\n")
+        f.write(f"Placement mode: `{args.placement}` ({len(pack.structures):,} structure templates). "
+                "\"Commands\" counts the placement commands in each build's `ac:raw/...` function.\n\n")
         f.write("| Franchise | World | Function | Build | Footprint (x by z, height) | Blocks | Commands |\n|---|---|---|---|---|---|---|\n")
         for fr, wn, fn, bn, size, nblocks, ncmds in manifest:
             f.write(f"| {fr} | {wn} | `{fn}` | {bn} | {size[0]} x {size[2]}, {size[1]} | {nblocks:,} | {ncmds:,} |\n")
@@ -295,7 +382,8 @@ def main() -> None:
 
     # ---- knowledge catalogue
     write_catalogue(records)
-    print(f"\nwrote {args.out}  ({len(pack.functions)} functions, {total_cmds:,} placement commands)")
+    print(f"\nwrote {args.out}  ({len(pack.functions)} functions, {len(pack.structures):,} structure templates, "
+          f"{total_cmds:,} placement commands, mode={args.placement})")
 
 
 def write_zip(folder: str, zip_path: str) -> None:

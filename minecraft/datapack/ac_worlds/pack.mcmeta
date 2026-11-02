@@ -5,6 +5,8 @@
       "min_inclusive": 48,
       "max_inclusive": 999
     },
+    "min_format": 48,
+    "max_format": 999,
     "description": "AC Worlds: Assassin's Creed and Avatar settings plus premodern technology models"
   }
 }

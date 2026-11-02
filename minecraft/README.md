@@ -56,19 +56,34 @@ or get Python from python.org.
 /function ac:tech/aqueduct         a technology model with its explanation
 /function ac:egypt/all             a whole world laid out in a row
 /function ac:hub_avatar            all Avatar worlds; ac:hub_assassins_creed, ac:hub_tech, ac:hub
+/function ac:fly                   creative flight
+/function ac:spirit                spectator "ghost" mode with night vision: fly through anything
+/function ac:overview              float 220 blocks above the hub centre, looking down
+/function ac:goto/egypt            jump to a world's row in the hub (any world id, or goto/tech)
 ```
 
 Builds are relative to your feet: the block you stand on becomes the ground
 level of the build and the build extends north (-z) and both sides. Each
 function force-loads its chunks, waits two seconds, places the blocks, then
 releases the chunks, so very large builds work even at low render distance.
-The hub needs roughly 1,100 x 2,000 blocks of flat land; `ac:<world>/all`
-needs about 1,000 x 300.
+The hub needs roughly 1,650 x 4,000 blocks of flat land (far beyond render
+distance, hence `ac:overview` and `ac:goto/<world>`); `ac:<world>/all` needs
+about 1,000 x 300.
+
+Blocks are placed as vanilla structure templates: each build is tiled into
+48x48x48 `.nbt` files under `data/ac/structure/` and placed with
+`/place template`, with only the large flat slabs left as `/fill`. That is
+about 3,300 placement commands for the whole pack instead of 151,000.
+`python3 generate.py --placement commands` produces the old pure
+`/fill`+`/setblock` pack instead (works on 1.21.0, forty times more commands).
 
 Requires 1.21 or newer (the pack uses the `function` folder name and macro
-functions). The pack declares `supported_formats` up to 999 so later versions
-load it; if a future version renames blocks you will see "unknown block" errors
-in chat for those few commands and the rest still builds.
+functions) and was verified on 26.3. `pack.mcmeta` carries both the legacy
+`supported_formats` and the newer `min_format`/`max_format` so every version
+loads it. Do not add `gamerule` lines to `ac:load`: 26.x renamed every game
+rule, and one unparseable line silently disables the whole function. If a
+future version renames blocks you will see "unknown block" errors in chat for
+those few commands and the rest still builds.
 
 ## What is in it
 

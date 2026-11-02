@@ -154,3 +154,22 @@ tellraw @s {"text": "  /function ac:tech/andean_terraces  -  Andean terraces (an
 tellraw @s {"text": "  /function ac:tech/chinampa  -  Aztec chinampas (61x41)", "color": "white"}
 tellraw @s {"text": "  /function ac:tech/mesoamerican_pyramid  -  Mesoamerican pyramids and Maya astronomy (61x61)", "color": "white"}
 tellraw @s {"text": "  /function ac:tech/great_zimbabwe  -  Great Zimbabwe and African ironworking (81x61)", "color": "white"}
+tellraw @s {"text": "Travel (after ac:hub): /function ac:fly, ac:spirit, ac:overview, ac:goto/<world>", "color": "yellow", "bold": true}
+tellraw @s {"text": "  /function ac:goto/holy_land  -  The Holy Land", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/italy  -  Renaissance Italy", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/constantinople  -  Ottoman Constantinople", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/colonial_america  -  Colonial America", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/caribbean  -  The Caribbean", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/paris  -  Revolutionary Paris", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/chronicles  -  Assassin's Creed Chronicles", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/london  -  Victorian London", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/egypt  -  Ptolemaic Egypt", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/greece  -  Classical Greece", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/viking  -  Viking England and Norway", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/baghdad  -  Abbasid Baghdad", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/japan  -  Sengoku Japan", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/hexe  -  Holy Roman Empire (Hexe)", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/atla  -  Avatar: The Last Airbender", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/korra  -  The Legend of Korra", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/seven_havens  -  Avatar: Seven Havens", "color": "white"}
+tellraw @s {"text": "  /function ac:goto/tech  -  Premodern technology", "color": "white"}

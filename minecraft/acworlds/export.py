@@ -129,16 +129,29 @@ class Datapack:
         self.namespace = namespace
         self.description = description
         self.functions: Dict[str, List[str]] = {}
+        self.structures: Dict[str, dict] = {}   # name -> template NBT (see structure.py)
 
     def add(self, name: str, commands: List[str]) -> None:
         self.functions[name] = commands
 
+    def add_structure(self, name: str, nbt: dict) -> None:
+        """Register a structure template, placed in game as ``<ns>:<name>``."""
+        self.structures[name] = nbt
+
     def write(self, root: str) -> None:
+        from .structure import write_template  # local import: structure.py imports this module
+
         os.makedirs(root, exist_ok=True)
         meta = {
             "pack": {
+                # 1.21.0 - 1.21.8 read pack_format / supported_formats;
+                # 1.21.9+ (format 82) and the 26.x releases read min_format /
+                # max_format instead.  Both sets are allowed together as long
+                # as the pack claims support below format 82, which it does.
                 "pack_format": 48,
                 "supported_formats": {"min_inclusive": 48, "max_inclusive": 999},
+                "min_format": 48,
+                "max_format": 999,
                 "description": self.description,
             }
         }
@@ -150,6 +163,11 @@ class Datapack:
             os.makedirs(os.path.dirname(path), exist_ok=True)
             with open(path, "w", encoding="utf-8") as f:
                 f.write("\n".join(cmds) + "\n")
+        sdir = os.path.join(root, "data", self.namespace, "structure")
+        for name, nbt in self.structures.items():
+            path = os.path.join(sdir, *name.split("/")) + ".nbt"
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            write_template(path, nbt)
         # run `load` once when the pack is (re)loaded
         tagdir = os.path.join(root, "data", "minecraft", "tags", "function")
         os.makedirs(tagdir, exist_ok=True)
