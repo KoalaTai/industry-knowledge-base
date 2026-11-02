@@ -36,6 +36,18 @@ This project is designed to scrape industry-specific interview questions and cre
   python main.py
   ```
 
+## Minecraft worlds and premodern technology (`minecraft/`)
+
+A vanilla Minecraft Java 1.21+ datapack generator that builds every
+Assassin's Creed setting (Egypt, the Holy Land, Renaissance Italy,
+Constantinople, Colonial America, the Caribbean, Paris, London, Greece,
+Viking England, Baghdad, Japan, the Chronicles trilogy, Hexe), the Avatar
+worlds (The Last Airbender, The Legend of Korra, Seven Havens) and 37
+working models of premodern technology, each backed by a record in a
+history-of-technology knowledge base. See
+[`minecraft/README.md`](minecraft/README.md) for install steps; the
+ready-made pack is `minecraft/datapack/ac_worlds.zip`.
+
 ## Future Enhancements
 - Implement a more robust scraping method for complex websites.
 - Add more industry-specific keywords.
