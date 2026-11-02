@@ -35,7 +35,7 @@ from typing import Optional
 SERVER_DIR = Path(os.environ.get("AC_SERVER_DIR", Path.home() / "minecraft-server"))
 ENV_FILE = SERVER_DIR / "rcon.env"
 MAX_PAYLOAD = 1446
-_COLOR = re.compile("§.")
+_COLOR = re.compile("§.|\x1b\\[[0-9;]*m")     # Minecraft section-sign codes and Paper's ANSI colours
 
 
 def load_env() -> dict:
@@ -109,27 +109,50 @@ def probe_block(x: int, y: int, z: int, block: str = "minecraft:air") -> str:
     if ":" not in block:
         block = "minecraft:" + block
     out = rcon().command(f"execute if block {x} {y} {z} {block}")
-    return ("yes" if "passed" in out.lower() else "no") + f" ({out.strip() or 'no output'})"
+    low = out.lower()
+    if "not loaded" in low:
+        verdict = "unknown"                      # chunk not loaded: forceload it first
+    elif "passed" in low:
+        verdict = "yes"
+    elif "failed" in low:
+        verdict = "no"
+    else:
+        verdict = "unknown"
+    return verdict + f" ({out.strip() or 'no output'})"
 
 
-def _forceload(verb: str, x: int, z: int, radius: int = 256) -> list:
-    """forceload accepts at most 256 chunks per call: tile a (2*radius)^2 area."""
-    outs = []
-    for x1 in range(x - radius, x + radius, 256):
-        for z1 in range(z - radius, z + radius, 256):
-            outs.append(rcon().command(f"forceload {verb} {x1} {z1} {x1 + 255} {z1 + 255}"))
-    return outs
+LOAD_RADIUS = 128        # 256x256 blocks = 256 chunks, the forceload per-command maximum
+
+
+def _forceload(verb: str, x: int, z: int, radius: int = LOAD_RADIUS) -> str:
+    return rcon().command(f"forceload {verb} {x - radius} {z - radius} {x + radius - 1} {z + radius - 1}")
+
+
+def _wait_loaded(x: int, y: int, z: int, radius: int = LOAD_RADIUS, timeout: float = 15.0) -> bool:
+    """Chunk loading is asynchronous: poll `execute if loaded` at the area's corners and centre."""
+    corners = [(x, z), (x - radius, z - radius), (x + radius - 1, z - radius),
+               (x - radius, z + radius - 1), (x + radius - 1, z + radius - 1)]
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        if all("passed" in rcon().command(f"execute if loaded {cx} {y} {cz}").lower() for cx, cz in corners):
+            return True
+        time.sleep(0.5)
+    return False
 
 
 def place_build(function_id: str, x: int, y: int, z: int) -> str:
     """Place one AC Worlds build (e.g. 'egypt/giza' or 'tech/aqueduct') with its origin at x y z.
 
-    Runs the raw placement function ac:raw/<function_id> from the console,
-    force-loading 512x512 blocks around the origin first and releasing them after.
+    Runs the raw placement function ac:raw/<function_id> from the console after
+    force-loading a 256x256-block area around the origin and waiting until it is
+    actually loaded (fill and place template silently skip unloaded chunks).
+    Builds wider than that need a second call or a manual forceload.
     """
     fid = function_id.strip().lstrip("/").removeprefix("ac:").removeprefix("raw/")
     _forceload("add", x, z)
-    time.sleep(2.0)                      # chunk loading is asynchronous
+    if not _wait_loaded(x, y, z):
+        _forceload("remove", x, z)
+        return "chunks around the origin did not load within 15 s; nothing placed"
     out = rcon().command(f"execute positioned {x} {y} {z} run function ac:raw/{fid}")
     _forceload("remove", x, z)
     return out.strip() or f"ran ac:raw/{fid} at {x} {y} {z} (no output; verify with probe_block)"

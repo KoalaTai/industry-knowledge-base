@@ -23,9 +23,16 @@ class FakeClient:
     def command(self, cmd):
         self.sent.append(cmd)
         if cmd == "list":
-            return "§aThere are 1 of a max of 5 players online: wari"
+            return "§aThere are 1 of a max of 5 players online: wari\x1b[0m"
         if cmd.startswith("execute if block"):
-            return "Test passed"
+            if " 9 9 9 " in cmd:
+                return "That position is not loaded"
+            return "Test passed" if cmd.endswith("minecraft:stone") else "Test failed"
+        if cmd.startswith("execute if loaded"):
+            self.loaded_polls = getattr(self, "loaded_polls", 0) + 1
+            return "Test passed" if self.loaded_polls > 5 else "Test failed"   # loads after the first poll round
+        if cmd.startswith("forceload"):
+            return "Marked 256 chunks"
         return ""
 
 
@@ -47,16 +54,22 @@ class BridgeTests(unittest.TestCase):
     def test_probe_block(self):
         self.assertTrue(server.probe_block(1, 2, 3, "stone").startswith("yes"))
         self.assertEqual(self.fake.sent[-1], "execute if block 1 2 3 minecraft:stone")
+        self.assertTrue(server.probe_block(1, 2, 3, "air").startswith("no"))
+        self.assertTrue(server.probe_block(9, 9, 9, "stone").startswith("unknown"))
 
     def test_place_build_forceloads_then_runs_then_releases(self):
         with mock.patch.object(server.time, "sleep"):
             server.place_build("ac:egypt/giza", 10, -60, 20)
         adds = [c for c in self.fake.sent if c.startswith("forceload add")]
         removes = [c for c in self.fake.sent if c.startswith("forceload remove")]
-        self.assertEqual(len(adds), 4)
-        self.assertEqual(len(removes), 4)
-        self.assertIn("execute positioned 10 -60 20 run function ac:raw/egypt/giza", self.fake.sent)
-        self.assertLess(self.fake.sent.index(adds[-1]), self.fake.sent.index("execute positioned 10 -60 20 run function ac:raw/egypt/giza"))
+        self.assertEqual(adds, ["forceload add -118 -108 137 147"])          # 256 x 256 blocks around 10, 20
+        self.assertEqual(len(removes), 1)
+        run = "execute positioned 10 -60 20 run function ac:raw/egypt/giza"
+        self.assertIn(run, self.fake.sent)
+        polls = [c for c in self.fake.sent if c.startswith("execute if loaded")]
+        self.assertGreaterEqual(len(polls), 6)                              # waited for the chunks to load
+        self.assertLess(self.fake.sent.index(polls[-1]), self.fake.sent.index(run))
+        self.assertLess(self.fake.sent.index(run), self.fake.sent.index(removes[0]))
 
     def test_oversized_command_is_refused(self):
         with self.assertRaises(ValueError):
