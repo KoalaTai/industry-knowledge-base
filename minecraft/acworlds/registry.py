@@ -38,8 +38,8 @@ def all_worlds() -> List[World]:
     """Import every world module and return them in franchise / play order."""
     from .worlds import (holy_land, italy, constantinople, colonial_america,
                          caribbean, paris, chronicles, london, egypt, greece,
-                         viking, baghdad, japan, hexe, atla, korra, seven_havens)
+                         viking, baghdad, japan, hexe, atla, korra, seven_havens, insomniac)
     return [m.WORLD for m in (holy_land, italy, constantinople, colonial_america,
                               caribbean, paris, chronicles, london, egypt, greece,
                               viking, baghdad, japan, hexe,
-                              atla, korra, seven_havens)]
+                              atla, korra, seven_havens, insomniac)]

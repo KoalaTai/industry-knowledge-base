@@ -60,7 +60,32 @@ or get Python from python.org.
 /function ac:spirit                spectator "ghost" mode with night vision: fly through anything
 /function ac:overview              float 220 blocks above the hub centre, looking down
 /function ac:goto/egypt            jump to a world's row in the hub (any world id, or goto/tech)
+/function ac:tour                  guided flight past all 119 landmarks, a chat card each (tour_next, tour_stop)
 ```
+
+## Sharing it
+
+Everything a friend needs is the one zip, `datapack/ac_worlds.zip`
+(about 4 MB). On their machine:
+
+1. Minecraft Java 26.3 or newer (the 2026 year-numbered releases). Bedrock
+   cannot load Java datapacks.
+2. Create a world: Creative, Superflat, cheats on. Open the world folder
+   (`Edit > Open World Folder` on the title screen's world list) and drop the
+   zip into its `datapacks/` folder.
+3. Open the world. A gold "AC Worlds datapack loaded" line confirms it. Stand
+   on open ground, face north, and run `/function ac:hub`, or let the
+   automatic build start fifteen seconds after joining.
+4. `/function ac:spirit` to ghost around while it builds, `/function ac:tour`
+   once "Everything: done" appears.
+
+To play on the same map together, run a local Paper server (26.3), put the
+zip in `<server>/<world>/datapacks/`, and have them Direct Connect to your
+address; see `rcon_bridge/README.md` once that is set up.
+
+Releases on GitHub carry the zip and, for the lazy, a ready-built
+`Animus.zip` world save: unzip it into `saves/` and everything is already
+standing.
 
 Builds are relative to your feet: the block you stand on becomes the ground
 level of the build and the build extends north (-z) and both sides. Each

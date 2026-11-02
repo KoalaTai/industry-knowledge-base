@@ -103,9 +103,11 @@ TERRAIN: Dict[str, Tuple[str, str, bool]] = {
     "atla": ("grass_block", "snow_block", True),
     "korra": ("grass_block", "stone", True),
     "seven_havens": ("coarse_dirt", "gravel", False),
+    "insomniac": ("gray_concrete", "black_concrete", False),     # the speedway asphalt
     "tech": ("grass_block", "dirt_path", False),
 }
 TERRAIN_MARGIN = 10      # pad extends this far beyond the row's builds
+MAX_ROW = 8              # builds per hub row before a world wraps onto another row
 SHORE_WIDTH = 8          # water strip along the north edge of coastal rows
 FILL_LIMIT = 32768       # vanilla max_block_modifications default
 
@@ -140,10 +142,16 @@ def layout_hub(pack: Datapack, rows: List[Tuple[str, str, List[Item]]], hub: str
     """
     placed: List[Tuple[Item, int, int]] = []
     cz = z_start
-    for n, (wid, wname, row) in enumerate(rows):
+    # wrap long worlds (Avatar: 10 builds, Insomniac: 13) onto extra rows of at most MAX_ROW builds
+    wrapped: List[Tuple[str, str, List[Item]]] = []
+    for wid, wname, row in rows:
+        for k in range(0, len(row), MAX_ROW):
+            wrapped.append((wid if k == 0 else f"{wid}_{k // MAX_ROW + 1}", wname, row[k:k + MAX_ROW]))
+    for n, (wid, wname, row) in enumerate(wrapped):
         if not row:
             continue
-        ground, accent, shore = TERRAIN.get(wid, TERRAIN["tech"])
+        base_wid = wid.rsplit("_", 1)[0] if wid.rsplit("_", 1)[-1].isdigit() else wid
+        ground, accent, shore = TERRAIN.get(base_wid, TERRAIN["tech"])
         cx = 0
         depth = 0
         row_placed: List[Tuple[Item, int, int]] = []
@@ -168,7 +176,7 @@ def layout_hub(pack: Datapack, rows: List[Tuple[str, str, List[Item]]], hub: str
             tz1 = rz1 - SHORE_WIDTH
             cmds += split_fill(rx1, -2, tz1, rx2, -2, rz1 - 1, "sand")
             cmds += split_fill(rx1, -1, tz1, rx2, 0, rz1 - 1, "water")
-        fn = f"terrain/{hub}/{wid}" if wid != "tech" else f"terrain/{hub}/tech_{n}"   # per hub: row z differs
+        fn = f"terrain/{hub}/{wid}" if base_wid != "tech" else f"terrain/{hub}/tech_{n}"   # per hub: row z differs
         pack.add(fn, cmds)
         placed.append((Item(f"terrain_{wid}_{n}", fn, f"{wname} terrain", (rx1, -2, tz1, rx2, 3, rz2)), 0, 0))
         placed += row_placed
@@ -460,15 +468,22 @@ def main() -> None:
     ac_rows = [world_items[w.id] for w in worlds if w.franchise == "Assassin's Creed"]
     av_rows = [world_items[w.id] for w in worlds if w.franchise == "Avatar"]
     tech_rows = [tech_items[i:i + 8] for i in range(0, len(tech_items), 8)]
-    ac_named = [(w.id, w.name, world_items[w.id]) for w in worlds if w.franchise == "Assassin's Creed"]
-    av_named = [(w.id, w.name, world_items[w.id]) for w in worlds if w.franchise == "Avatar"]
+    # one group of rows per franchise, in registry order, then the technology rows
+    franchises: List[str] = []
+    for w in worlds:
+        if w.franchise not in franchises:
+            franchises.append(w.franchise)
+    by_franchise = {f: [(w.id, w.name, world_items[w.id]) for w in worlds if w.franchise == f] for f in franchises}
     tech_named = [("tech", "Premodern technology", r) for r in tech_rows]
-    hub_layout = layout_hub(pack, ac_named + av_named + tech_named, "hub")
+    hub_layout = layout_hub(pack, sum(by_franchise.values(), []) + tech_named, "hub")
     add_sequence(pack, "hub", hub_layout, "Everything", remember=True)
     add_travel(pack, hub_layout, worlds, index_lines)
     add_tour(pack, hub_layout, index_lines)
-    add_sequence(pack, "hub_assassins_creed", layout_hub(pack, ac_named, "hub_assassins_creed"), "Assassin's Creed worlds")
-    add_sequence(pack, "hub_avatar", layout_hub(pack, av_named, "hub_avatar"), "Avatar worlds")
+    for f in franchises:
+        slug = "hub_" + "".join(ch if ch.isalnum() else "_" for ch in f.lower().replace("'", "")).strip("_")
+        slug = "_".join(p for p in slug.split("_") if p)          # "hub_assassins_creed", "hub_avatar", "hub_insomniac_events"
+        add_sequence(pack, slug, layout_hub(pack, by_franchise[f], slug), f"{f} worlds")
+        index_lines.append(say(f"  /function {NS}:{slug}  -  every {f} world in rows", "aqua"))
     add_sequence(pack, "hub_tech", layout_hub(pack, tech_named, "hub_tech"), "Premodern technology")
 
     # ---- plumbing: sequence runner, load, tick, auto-build, cancel, index
